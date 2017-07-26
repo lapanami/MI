@@ -1,37 +1,181 @@
-<!DOCTYPE html>
-<html>
-	<head>
-		<meta charset="UTF-8">
-		<title>Login</title>
-		<script src="static/js/jquery-3.2.1.min.js"></script>
-		<script src="static/js/bootstrap.min.js"></script>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html lang="en-US" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="x-ua-compatible" content="IE=edge" />
+    <title>Login - Home Credit Vietnam
+    </title>
+    <link type="text/css" href="static/css/login.css" rel="stylesheet"/>
 
-		<link href="static/css/bootstrap.min.css" rel="stylesheet">
-		<link href="static/css/login.css" rel="stylesheet">
-	</head>
-	<body>
-		<a href="#" data-toggle="modal" data-target="#login-modal">Login</a>
+	<script src="static/js/jquery-3.2.1.min.js"></script>
+	<script src="static/js/bootstrap.min.js"></script>
 
-		<div class="modal fade" id="login-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
-    	    <div class="modal-dialog vertical-align-center">
-				<div class="loginmodal-container">
-					<h1>Login to Home Credit Account</h1><br>
-				  <form action="/login" method="POST">
-					<input type="text" name="username" id="username" placeholder="Username">
-					<input type="password" name="password" id="password" placeholder="Password">
-					<input type="submit" name="login" id="btnLogin" class="login loginmodal-submit" value="Login">
-				  </form>
-					
-				  <div class="login-help">
-					<a href="#">Forgot Password</a>
-				  </div>
-				</div>
-			</div>
-		</div>
-		<script type="text/javascript">
-			$(function () {
-			    $('#login-modal').modal('toggle');
-			});
-		</script>
-	</body>
+	<link href="static/css/bootstrap.min.css" rel="stylesheet">
+
+    
+    <link href="images/favicon.ico " type="image/x-icon" rel="icon" />
+	<link href="images/favicon.ico " type="image/x-icon" rel="shortcut icon" />
+
+</head>
+<body>
+    <table style="width: 100%" cellpadding="0" cellspacing="0" class="dev_page_border">
+        <tr>
+            <td style="width: 10px">
+            </td>
+            <td style="width: 99%">
+<table cellpadding="2" cellspacing="2" class="dev_company_title">
+    <tr>
+        <td style="width: 50px" valign="bottom">
+            <a href="/">
+                <img src="images/logo-home-credit-group.gif" alt="" /></a>
+        </td>
+        <td class="dev_top_center">
+            Home Credit Vietnam
+            <div class="dev_comany_version">
+                Version 1.0</div>
+        </td>
+        <td style="width: 300px">
+            <div class="dev_top_right_area">
+                    <table cellpadding="0" cellspacing="0">
+                        <tr>
+                            <td>
+                                <a class="dev_color_link" href="/Help">Help</a>
+                            </td>
+                            <td>
+                                <a class="dev_color_link" href="/Help">
+                                    <img src="images/help_20.png" alt="Help" />
+                                </a>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                    <p>
+                                        [ <a href="/HCVNSECURITY/User/Login">Log In</a>
+                                        ]
+                                    </p>
+                            </td>
+                            <td>
+                                <img src="images/user.png" alt="User Profile" />
+                            </td>
+                        </tr>
+                    </table>
+            </div>
+        </td>
+    </tr>
+</table>
+<div id="header-separator">
+</div>
+<div class="dev_breadcrumb">
+    <div class="dev_breadcrumb_left">
+        Login</div>
+    <div class="dev_breadcrumb_right">
+        
+    <a href="/">Home</a>
+
+    
+        &gt;
+    Login
+
+    
+    </div>
+</div>
+                <div class="dev_body_content">
+                    <table style="width: 100%" cellpadding="0" cellspacing="0">
+                        <tr>
+                            <td>
+                                <form action="/login" id="form_login" method="POST">
+<input id="ReturnUrl" name="ReturnUrl" type="hidden" value="/" />    
+	<table width="100%">
+        <tr>
+            <td valign="top" class="dev_group" width="350px">
+                <table>
+                    <tr>
+                        <td style="width: 120px" class="dev_view_data_title">
+                            Login Name <span class="dev_required_format">*</span>
+                        </td>
+                        <td class="dev_view_data_value_boder">
+                            <input class="t-input dev_width_200" data-val="true" data-val-required="Required" id="username" name="username" type="text" value="" />
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="dev_view_data_title">
+                            Password <span class="dev_required_format">*</span>
+                        </td>
+                        <td class="dev_view_data_value_boder">
+                            <input class="t-input dev_width_200" data-val="true" data-val-required="Required" id="password" name="password" type="password" value="" />
+                        </td>
+                    </tr>
+                    <tr style="display: none;">
+                        <td class="dev_view_data_title">
+                        </td>
+                        <td class="dev_view_data_value_boder">
+                            <input id="rememberMe" name="rememberMe" type="checkbox" value="true" /><input name="rememberMe" type="hidden" value="false" /> Remember Me?
+                        </td>
+                    </tr>
+                    <td colspan="2">
+                    </td>
+                    <tr>
+                        <td>
+                        </td>
+                        <td align="left">
+                            <button type="submit" name="btnSignIn" id="btnSignIn" class="t-button">LOGIN</button>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+            <td style="width: 50px;">
+                &nbsp;
+            </td>
+            <td valign="top" align="left" class="dev_group" style="background: #FFEAEA;">
+                <p>Only authorized Home Credit Vietnam users are permitted to use and access this system. </p><p>If you are not an authorized user, do not attempt to login to this system. </p><p>By logging on to this system, you are responsible for strictly adhering to the Home Credit Vietnam information Security Policies. </p><p>Penalties exist for unauthorized access, unauthorized user, or unauthorized distribution of information of the Home Credit Vietnam.</p>
+            </td>
+        </tr>
+    </table>
+</form><script type="text/javascript">
+    $(document).ready(function () {
+        $("#username").focus();
+    });
+</script>
+
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+                <div id="dev_footer">
+    <div id="dev_terms">
+        Designed by Home Credit Vietnam Internal Development Team.
+    </div>
+    Copyright 2014 &copy; Home Credit Vietnam. All rights reserved.
+</div>
+<script type="text/jscript">
+    $(document).ready(function () {
+
+        $("ul.subnav").parent().append("<span></span>"); //Only shows drop down trigger when js is enabled (Adds empty span tag after ul.subnav*)
+
+        $("ul.topnav li span").click(function () { //When trigger is clicked...
+
+            //Following events are applied to the subnav itself (moving subnav up and down)
+            $(this).parent().find("ul.subnav").slideDown('fast').show(); //Drop down the subnav on click
+
+            $(this).parent().hover(function () {
+            }, function () {
+                $(this).parent().find("ul.subnav").slideUp('slow'); //When the mouse hovers out of the subnav, move it back up
+            });
+
+            //Following events are applied to the trigger (Hover events for the trigger)
+        }).hover(function () {
+            $(this).addClass("subhover"); //On hover over, add class "subhover"
+        }, function () {	//On Hover Out
+            $(this).removeClass("subhover"); //On hover out, remove class "subhover"
+        });
+
+    });
+
+</script>
+<div id="div_overlay">
+</div>            </td>
+            <td style="width: 10px">
+            </td>
+        </tr>
+    </table>
+</body>
 </html>
