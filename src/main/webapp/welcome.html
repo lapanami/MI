@@ -2,6 +2,10 @@
 Hi ${user.firstName + ' ' + user.lastName}<br />
 Welcome to Home Credit.
 This is our user list: 
+<script src="static/js/jquery.dataTables.min.js"></script>
+<script src="static/js/dataTables.bootstrap.min.js"></script>
+<link href="static/css/dataTables.bootstrap.min.css" rel="stylesheet">
+<link href="static/css/common/welcome.css" rel="stylesheet">
 <table width="100%" class="display" id="userList" cellspacing="0">
 	<thead>
 		<tr>
@@ -62,7 +66,11 @@ This is our user list:
   </div>
 </div>
 <script type="text/javascript">
-	$("#userList").DataTable();
+	$("#userList").DataTable({
+		"language": {
+			"info": "Showing _START_ to _END_ of _TOTAL_ users"
+		}
+	});
 	var jsonListUser = <#if jsonListUser??>${jsonListUser}<#else >''</#if>;
 	var mapUser = {};
 	for (var i = 0; i < jsonListUser.length; i++) {

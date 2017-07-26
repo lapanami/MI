@@ -1,0 +1,224 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<#setting classic_compatible=true> 
+<html lang="en-US" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="x-ua-compatible" content="IE=edge" />
+    <meta charset="UTF-8">
+    <title>Home Credit Vietnam
+    </title>
+
+    <script src="static/js/jquery-3.2.1.min.js"></script>
+    <script src="static/js/jqueryslidemenu.js"></script>
+    <script src="static/js/bootstrap.min.js"></script>
+    <script src="static/js/jquery.dataTables.min.js"></script>
+    <script src="static/js/dataTables.bootstrap.min.js"></script>
+
+    <link href="static/css/dataTables.bootstrap.min.css" rel="stylesheet">
+    <link href="static/css/bootstrap.min.css" rel="stylesheet"> 
+    <link href="static/css/common.css" rel="stylesheet"/>
+    <link href="images/favicon.ico " type="image/x-icon" rel="icon" />
+    <link href="images/favicon.ico " type="image/x-icon" rel="shortcut icon" />
+    <style type="text/css">
+        .modal-dialog .modal-body li {
+            display: block;
+        }
+    </style>
+</head>
+<body>
+    <table style="width: 100%" cellpadding="0" cellspacing="0" class="dev_page_border">
+        <tr>
+            <td style="width: 10px">
+            </td>
+            <td style="width: 99%">
+            <table cellpadding="2" cellspacing="2" class="dev_company_title">
+                <tr>        
+                    <td style="width: 100px" valign="bottom">
+                        <a href="/">
+                            <img src="images/logo-home-credit-group.gif" alt="" /></a>
+                    </td>
+                    <td class="dev_top_center">
+                        Home Credit Vietnam
+                        <div class="dev_comany_version">
+                            Version 1.0</div>
+                    </td>
+                    <td style="width: 300px">
+                        <div class="dev_top_right_area">
+                                <table cellpadding="0" cellspacing="0">
+                                    <tr>
+                                        <td>
+                                            <a class="dev_color_link" href="/Help">Help</a>
+                                        </td>
+                                        <td>
+                                            <a class="dev_color_link" href="/Help">
+                                                <img src="images/help_20.png" alt="Help" />
+                                            </a>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                                <p>
+                                                    HELLO ${user.lastName + ' ' +user.firstName}
+            [<a href="/user/logoff">Log Out</a>]                                    </p>
+                                        </td>
+                                        <td>
+                                            <img src="images/user.png" alt="User Profile" />
+                                        </td>
+                                    </tr>
+                                </table>
+                        </div>
+                    </td>        
+                </tr>
+            </table>
+            <div id="header-separator">
+            </div>
+            <div class="clr">
+            </div>
+            <div class="jqueryslidemenu ui-helper-clearfix" id="myslidemenu">
+                <ul><li><a href='javascript:' title=''>Mailing Room</a><ul><li><a href='/IncomingMail/IncomingMailList' title='Use to view all incoming mail'>Incoming Mailing List</a></li><li><a href='/OutgoingMail/OutgoingMailingList' title=''>Outgoing Mailing List</a></li></ul></li><li><a href='javascript:' title=''>Departments</a><ul><li><a href='/IncomingMail/IncomingMailListDept' title='List all incoming mails which belongs to a coresponding user in Dept Staff'>Incoming Mail List</a></li><li><a href='/OutgoingMail/RequestList' title='List all outgoing mails which belongs to a user created(Dept Staff)'>Outgoing Mail List</a></li></ul></li><li><a href='javascript:' title=''>Control Panel</a><ul><li><a href='/IncomingMail/STAFFRECEIVINGMAIL' title=''>Staff Receiving Mail</a></li><li><a href='/OutgoingMail/EXPORTEXCELFORMAILINGPAYMENT' title='use to export into Excel report '>Export Excell For Mailing Payment</a></li></ul></li></ul>
+                <div class="clr">
+                </div>
+            </div>
+            <div class="dev_breadcrumb">
+                <div class="dev_breadcrumb_left">
+                    <a href="/">Home</a></div>
+                <div class="dev_breadcrumb_right">
+                    
+                <a href="/">Home</a>
+                </div>
+            </div>
+            <div id="div_notify" style="display: none;">
+                <div class="clr">
+                </div>
+                <div id="div_css_notify">
+                    <table style="width: 100%">
+                        <tr>
+                            <td style="width: 1%">
+                                <img id="img_notify" alt="" />
+                            </td>
+                            <td id="div_notify_message">
+                            </td>
+                            <td style="width: 1%" valign="top">
+                                <a onclick="closeClientMessage()">
+                                    <img src="images/cancel_16.png" /></a>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+            <script type="text/javascript">
+                function closeClientMessage() {
+                    $("#div_notify").fadeOut("slow")
+                }
+            </script>
+                <div class="dev_body_content">
+                    <table width="100%" class="display" id="userList" cellspacing="0">
+                        <thead>
+                            <tr>
+                                <th>First Name</th>
+                                <th>Last Name</th>
+                                <th>User Name</th>
+                                <th>Email</th>
+                                <th>Created By</th>
+                                <th>Created Date</th>
+                            </tr>
+                        </thead>
+                        <tfoot>
+                            <tr>
+                                <th>First Name</th>
+                                <th>Last Name</th>
+                                <th>User Name</th>
+                                <th>Email</th>
+                                <th>Created By</th>
+                                <th>Created Date</th>
+                            </tr>
+                        </tfoot>
+                        <tbody>
+                            <#list listUser as user>
+                            <tr data-uid="${user.userId}">
+                                <td>${user.firstName}</td>
+                                <td>${user.lastName}</td>
+                                <td>${user.userName}</td>
+                                <td>${user.email}</td>
+                                <td>${user.createdBy}</td>
+                                <td>${user.createdDate?string["dd.MM.yyyy"]}</td>
+                            </tr>
+                        </#list>
+                        </tbody>
+                    </table>
+                    <div id="myModal" class="modal fade" role="dialog">
+                      <div class="modal-dialog">
+
+                        <!-- Modal content-->
+                        <div class="modal-content">
+                          <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal">&times;</button>
+                            <h4 class="modal-title">User Information</h4>
+                          </div>
+                          <div class="modal-body">
+                            <ul>
+                                <li>Username:<b id="userName"></b></li>
+                                <li>First Name:<b id="firstName"></b></li>
+                                <li>Last Name:<b id="lastName"></b></li>
+                                <li>Email:<b id="email"></b></li>
+                                <li>Status:<b id="status"></b></li>
+                            </ul>
+                          </div>
+                          <div class="modal-footer">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                          </div>
+                        </div>
+
+                      </div>
+                    </div>
+                </div>
+                <div id="dev_footer">
+                    <div id="dev_terms">
+                        Designed by Home Credit Vietnam Internal Development Team.
+                    </div>
+                    Copyright 2012 &copy; Home Credit Vietnam. All
+                    rights reserved.
+                </div>
+                <div id="div_loading" style="display: none;">
+                    <img src="images/ajax-loader-2.gif" />
+                </div>
+                <div id="div_overlay">
+                </div>            
+            </td>
+            <td style="width: 10px">
+            </td>
+        </tr>
+    </table>
+<script type="text/javascript">
+    $("#userList").DataTable({
+        "language": {
+            "info": "Showing _START_ to _END_ of _TOTAL_ users"
+        }
+    });
+    var jsonListUser = <#if jsonListUser??>${jsonListUser}<#else >''</#if>;
+    var mapUser = {};
+    for (var i = 0; i < jsonListUser.length; i++) {
+        mapUser[jsonListUser[i].userId] = jsonListUser[i];
+    }
+    function setUserInfo(user) {
+        $("#userName").html(user.userName);
+        $("#firstName").html(user.firstName);
+        $("#lastName").html(user.lastName);
+        $("#email").html(user.email);
+        if (user.status) {
+            $("#status").html("Active");
+        } else {
+            $("#status").html("Inactive");
+        }
+    }
+    function userInfo(userId) {
+        console.log(mapUser[userId]);
+        setUserInfo(mapUser[userId]);
+        $("#myModal").modal("toggle");
+    }
+    $("#userList tbody tr").css("cursor", "pointer");
+    $("#userList tbody tr").on("click", function(e) {
+        userInfo($(this).attr("data-uid"));
+    })
+</script>
+</body>
+</html>

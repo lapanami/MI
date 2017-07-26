@@ -56,7 +56,7 @@ public class LoginController {
 					logger.error(e.getMessage());
 					e.printStackTrace();
 				}
-				return "welcome";
+				return "home";
 			} else {
 				return "error";
 			}
