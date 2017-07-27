@@ -19,7 +19,7 @@ import vn.credit.home.entity.SecUser;
 import vn.credit.home.service.IUserService;
 
 @Controller
-@RequestMapping("/login")
+@RequestMapping("/")
 public class LoginController {
 	Logger logger = Logger.getLogger(getClass());
 
