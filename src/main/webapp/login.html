@@ -76,6 +76,29 @@
     
     </div>
 </div>
+<table style="width: 100%;<#if RequestParameters.error??><#else>display:none;</#if>" cellpadding="0" cellspacing="0">
+        <tbody><tr>
+            <td>
+                <div class="dev_notify_message_error">
+                    <table style="width: 100%">
+                        <tbody><tr>
+                            <td style="width: 1%">
+                                <img src="/Content/Images/buttons/alert32.png" alt="">
+                            </td>
+                            <td>
+                                <#if RequestParameters.error == 'errorLoginFail'>
+                                    Login in has been failed. Your domain account will be locked after three times logging in failed.
+                                <#elseif RequestParameters.error == 'errorAccessDenied'>
+                                    Access denied. Please contact Help Desk for more information.
+                                </#if>
+                            </td>
+                        </tr>
+                    </tbody></table>
+                </div>
+            </td>
+        </tr>
+    </tbody>
+</table>
                 <div class="dev_body_content">
                     <table style="width: 100%" cellpadding="0" cellspacing="0">
                         <tr>
