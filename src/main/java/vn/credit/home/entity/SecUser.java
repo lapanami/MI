@@ -17,6 +17,7 @@ import javax.persistence.TemporalType;
 /**
  * The persistent class for the SEC_USER database table.
  * 
+ * @author loc.mh
  */
 @Entity
 @Table(name = "SEC_USER")

@@ -1,0 +1,25 @@
+<div class="jqueryslidemenu ui-helper-clearfix" id="myslidemenu">
+    <#assign controllerName="">
+    <ul>
+        <li>
+            <#list listMenu as menu>
+                <#if controllerName != menu.controllerName>
+                    <a href='javascript:' title=''>${menu.controllerName}</a>
+                    <ul>
+                    <#assign controllerName=menu.controllerName>
+                <#else>
+                    <li>
+                        <a href='/${menu.controllerName}/${menu.pageName}' title='${menu.pageTitle}'>${menu.pageTitle}</a>
+                    </li>
+                </#if>
+                <#if menu_index < listMenu?size-1>
+                    <#if menu.controllerName != listMenu[menu_index + 1].controllerName>
+                        </ul>
+                    </#if>
+                </#if>
+            </#list>
+        </li>
+    </ul>
+    <div class="clr">
+    </div>
+</div>

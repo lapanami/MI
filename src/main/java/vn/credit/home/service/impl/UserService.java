@@ -3,14 +3,19 @@ package vn.credit.home.service.impl;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import vn.credit.home.dao.IUserDAO;
 import vn.credit.home.entity.SecUser;
+import vn.credit.home.entity.UserMenu;
 import vn.credit.home.service.IUserService;
 
 @Service
 public class UserService implements IUserService {
+
+	@Value("${application.id}")
+	String appId;
 
 	@Autowired
 	IUserDAO userDAO;
@@ -36,6 +41,16 @@ public class UserService implements IUserService {
 		} catch (Exception ex) {
 			return null;
 		}
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see Get user menu by execute stored procedure SP_SEC_USER_MENU_GET
+	 */
+	@Override
+	public List<UserMenu> getUserMenu(String userName) {
+		return userDAO.getUserMenu(userName, appId);
 	}
 
 }
