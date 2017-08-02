@@ -1,9 +1,9 @@
-package vn.credit.home.dao;
+package vn.credit.home.dao.oracle;
 
 import java.util.List;
 
-import vn.credit.home.entity.SecUser;
-import vn.credit.home.entity.UserMenu;
+import vn.credit.home.entity.oracle.SecUser;
+import vn.credit.home.entity.oracle.UserMenu;
 
 public interface IUserDAO {
 	List<SecUser> listAllUser();

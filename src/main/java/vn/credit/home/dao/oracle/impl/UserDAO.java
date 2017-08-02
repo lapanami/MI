@@ -1,4 +1,4 @@
-package vn.credit.home.dao.impl;
+package vn.credit.home.dao.oracle.impl;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -15,12 +15,13 @@ import org.hibernate.result.ResultSetOutput;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
-import vn.credit.home.dao.IUserDAO;
-import vn.credit.home.entity.SecUser;
-import vn.credit.home.entity.UserMenu;
+import vn.credit.home.dao.oracle.IUserDAO;
+import vn.credit.home.entity.oracle.SecUser;
+import vn.credit.home.entity.oracle.UserMenu;
 
 @Transactional
 @Repository
@@ -28,20 +29,25 @@ public class UserDAO implements IUserDAO {
 	Logger logger = LoggerFactory.getLogger(this.getClass());
 
 	@Autowired
-	private SessionFactory sessionFactory;
+	@Qualifier("oracleEntityManager")
+	EntityManager entityManager;
 
 	@Autowired
-	private EntityManager entityManager;
+	private SessionFactory sessionFactory;
 
 	@Override
 	public List<SecUser> listAllUser() {
-		Criteria criteria = sessionFactory.getCurrentSession().createCriteria(SecUser.class);
+		Criteria criteria = getsession(entityManager).createCriteria(SecUser.class);
 		return criteria.list();
+	}
+
+	private Session getsession(EntityManager entityManager) {
+		return entityManager.unwrap(Session.class);
 	}
 
 	@Override
 	public SecUser getUserByUserName(String userName) {
-		Criteria criteria = sessionFactory.getCurrentSession().createCriteria(SecUser.class);
+		Criteria criteria = getsession(entityManager).createCriteria(SecUser.class);
 		criteria.add(Restrictions.eq("userName", userName));
 		List<SecUser> list = criteria.list();
 		if (list.isEmpty()) {
@@ -53,7 +59,7 @@ public class UserDAO implements IUserDAO {
 
 	@Override
 	public SecUser getUserByUserId(String userId) {
-		return sessionFactory.getCurrentSession().get(SecUser.class, userId);
+		return getsession(entityManager).get(SecUser.class, userId);
 	}
 
 	/*
@@ -63,7 +69,7 @@ public class UserDAO implements IUserDAO {
 	 */
 	@Override
 	public List<UserMenu> getUserMenu(String userName, String appId) {
-		Session session = sessionFactory.getCurrentSession();
+		Session session = getsession(entityManager);
 		ProcedureCall proc = session.getNamedProcedureCall("getUserMenu");
 		proc.getRegisteredParameters().stream().forEach((param) -> {
 			if ("I_APPLICATION_ID".equalsIgnoreCase(param.getName())) {

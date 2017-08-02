@@ -1,4 +1,4 @@
-package vn.credit.home.entity;
+package vn.credit.home.entity.oracle;
 
 import java.io.Serializable;
 import javax.persistence.*;

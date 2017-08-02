@@ -9,7 +9,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.stereotype.Component;
 
-import vn.credit.home.entity.SecUser;
+import vn.credit.home.entity.oracle.SecUser;
 import vn.credit.home.service.IUserService;
 
 @Component

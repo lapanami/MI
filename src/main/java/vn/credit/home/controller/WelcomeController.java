@@ -18,7 +18,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-import vn.credit.home.entity.SecUser;
+import vn.credit.home.entity.oracle.SecUser;
 import vn.credit.home.service.IUserService;
 
 @Controller

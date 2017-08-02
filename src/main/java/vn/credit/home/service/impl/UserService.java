@@ -6,9 +6,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
-import vn.credit.home.dao.IUserDAO;
-import vn.credit.home.entity.SecUser;
-import vn.credit.home.entity.UserMenu;
+import vn.credit.home.dao.oracle.IUserDAO;
+import vn.credit.home.entity.oracle.SecUser;
+import vn.credit.home.entity.oracle.UserMenu;
 import vn.credit.home.service.IUserService;
 
 @Service
