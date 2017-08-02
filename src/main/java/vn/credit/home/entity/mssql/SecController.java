@@ -10,18 +10,24 @@ import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 
 /**
- * The persistent class for the SEC_USER_ROLE database table.
+ * The persistent class for the SEC_CONTROLLER database table.
  * 
  */
 @Entity
-@Table(name = "SEC_USER_ROLE")
-@NamedQuery(name = "SecUserRole.findAll", query = "SELECT s FROM SecUserRole s")
-public class SecUserRole implements Serializable {
+@Table(name = "SEC_CONTROLLER")
+@NamedQuery(name = "SecController.findAll", query = "SELECT s FROM SecController s")
+public class SecController implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@Column(name = "USER_ROLE_ID")
-	private String userRoleId;
+	@Column(name = "CONTROLLER_ID")
+	private String controllerId;
+
+	@Column(name = "APPLICATION_ID")
+	private String applicationId;
+
+	@Column(name = "CONTROLLER_NAME")
+	private String controllerName;
 
 	@Column(name = "CREATED_BY")
 	private String createdBy;
@@ -35,27 +41,40 @@ public class SecUserRole implements Serializable {
 	@Column(name = "LAST_CHANGED_DATE")
 	private Timestamp lastChangedDate;
 
+	@Column(name = "ORDER_NUMBER")
+	private int orderNumber;
+
 	@Column(name = "REMARK")
 	private String remark;
-
-	@Column(name = "ROLE_ID")
-	private String roleId;
 
 	@Column(name = "STATUS")
 	private int status;
 
-	@Column(name = "USER_ID")
-	private String userId;
-
-	public SecUserRole() {
+	public SecController() {
 	}
 
-	public String getUserRoleId() {
-		return this.userRoleId;
+	public String getControllerId() {
+		return this.controllerId;
 	}
 
-	public void setUserRoleId(String userRoleId) {
-		this.userRoleId = userRoleId;
+	public void setControllerId(String controllerId) {
+		this.controllerId = controllerId;
+	}
+
+	public String getApplicationId() {
+		return this.applicationId;
+	}
+
+	public void setApplicationId(String applicationId) {
+		this.applicationId = applicationId;
+	}
+
+	public String getControllerName() {
+		return this.controllerName;
+	}
+
+	public void setControllerName(String controllerName) {
+		this.controllerName = controllerName;
 	}
 
 	public String getCreatedBy() {
@@ -90,6 +109,14 @@ public class SecUserRole implements Serializable {
 		this.lastChangedDate = lastChangedDate;
 	}
 
+	public int getOrderNumber() {
+		return this.orderNumber;
+	}
+
+	public void setOrderNumber(int orderNumber) {
+		this.orderNumber = orderNumber;
+	}
+
 	public String getRemark() {
 		return this.remark;
 	}
@@ -98,28 +125,12 @@ public class SecUserRole implements Serializable {
 		this.remark = remark;
 	}
 
-	public String getRoleId() {
-		return this.roleId;
-	}
-
-	public void setRoleId(String roleId) {
-		this.roleId = roleId;
-	}
-
 	public int getStatus() {
 		return this.status;
 	}
 
 	public void setStatus(int status) {
 		this.status = status;
-	}
-
-	public String getUserId() {
-		return this.userId;
-	}
-
-	public void setUserId(String userId) {
-		this.userId = userId;
 	}
 
 }

@@ -34,9 +34,11 @@ public class WelcomeController {
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 		LdapUserDetails ldapUser = (LdapUserDetails) auth.getPrincipal();
 		List<SecUser> listUser = userService.listAllUser();
+		List<vn.credit.home.entity.mssql.SecUser> listMSUser = userService.listAllMSUser();
 		model.addAttribute("title", "Welcome to Home Credit Viet Nam");
 		model.addAttribute("user", ldapUser);
 		model.addAttribute("listUser", listUser);
+		model.addAttribute("listMSUser", listMSUser);
 		model.addAttribute("listMenu", userService.getUserMenu(auth.getName()));
 		ObjectMapper om = new ObjectMapper();
 		try {

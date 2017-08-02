@@ -1,23 +1,17 @@
 package vn.credit.home.entity.mssql;
 
 import java.io.Serializable;
-import java.math.BigDecimal;
-import java.util.Date;
+import java.sql.Timestamp;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
 
 /**
  * The persistent class for the SEC_USER database table.
  * 
- * @author loc.mh
  */
 @Entity
 @Table(name = "SEC_USER")
@@ -26,19 +20,17 @@ public class SecUser implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(name = "USER_ID")
 	private String userId;
 
 	@Column(name = "AUTHEN_TYPE")
-	private BigDecimal authenType;
+	private int authenType;
 
 	@Column(name = "CREATED_BY")
 	private String createdBy;
 
-	@Temporal(TemporalType.DATE)
 	@Column(name = "CREATED_DATE")
-	private Date createdDate;
+	private Timestamp createdDate;
 
 	@Column(name = "EMAIL")
 	private String email;
@@ -46,21 +38,26 @@ public class SecUser implements Serializable {
 	@Column(name = "FIRST_NAME")
 	private String firstName;
 
+	@Column(name = "HR_TITLE")
+	private String hrTitle;
+
 	@Column(name = "LAST_CHANGED_BY")
 	private String lastChangedBy;
 
-	@Temporal(TemporalType.DATE)
 	@Column(name = "LAST_CHANGED_DATE")
-	private Date lastChangedDate;
+	private Timestamp lastChangedDate;
 
 	@Column(name = "LAST_NAME")
 	private String lastName;
 
+	@Column(name = "PASSWORD")
 	private String password;
 
+	@Column(name = "REMARK")
 	private String remark;
 
-	private BigDecimal status;
+	@Column(name = "STATUS")
+	private int status;
 
 	@Column(name = "USER_NAME")
 	private String userName;
@@ -76,11 +73,11 @@ public class SecUser implements Serializable {
 		this.userId = userId;
 	}
 
-	public BigDecimal getAuthenType() {
+	public int getAuthenType() {
 		return this.authenType;
 	}
 
-	public void setAuthenType(BigDecimal authenType) {
+	public void setAuthenType(int authenType) {
 		this.authenType = authenType;
 	}
 
@@ -92,11 +89,11 @@ public class SecUser implements Serializable {
 		this.createdBy = createdBy;
 	}
 
-	public Date getCreatedDate() {
+	public Timestamp getCreatedDate() {
 		return this.createdDate;
 	}
 
-	public void setCreatedDate(Date createdDate) {
+	public void setCreatedDate(Timestamp createdDate) {
 		this.createdDate = createdDate;
 	}
 
@@ -116,6 +113,14 @@ public class SecUser implements Serializable {
 		this.firstName = firstName;
 	}
 
+	public String getHrTitle() {
+		return this.hrTitle;
+	}
+
+	public void setHrTitle(String hrTitle) {
+		this.hrTitle = hrTitle;
+	}
+
 	public String getLastChangedBy() {
 		return this.lastChangedBy;
 	}
@@ -124,11 +129,11 @@ public class SecUser implements Serializable {
 		this.lastChangedBy = lastChangedBy;
 	}
 
-	public Date getLastChangedDate() {
+	public Timestamp getLastChangedDate() {
 		return this.lastChangedDate;
 	}
 
-	public void setLastChangedDate(Date lastChangedDate) {
+	public void setLastChangedDate(Timestamp lastChangedDate) {
 		this.lastChangedDate = lastChangedDate;
 	}
 
@@ -141,7 +146,7 @@ public class SecUser implements Serializable {
 	}
 
 	public String getPassword() {
-		return "";
+		return this.password;
 	}
 
 	public void setPassword(String password) {
@@ -156,11 +161,11 @@ public class SecUser implements Serializable {
 		this.remark = remark;
 	}
 
-	public BigDecimal getStatus() {
+	public int getStatus() {
 		return this.status;
 	}
 
-	public void setStatus(BigDecimal status) {
+	public void setStatus(int status) {
 		this.status = status;
 	}
 

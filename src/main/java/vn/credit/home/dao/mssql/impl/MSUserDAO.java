@@ -1,4 +1,7 @@
-package vn.credit.home.dao.oracle.impl;
+/**
+ * @author loc.mh
+ */
+package vn.credit.home.dao.mssql.impl;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,17 +21,21 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
-import vn.credit.home.dao.oracle.IUserDAO;
-import vn.credit.home.entity.oracle.SecUser;
-import vn.credit.home.entity.oracle.UserMenu;
+import vn.credit.home.dao.mssql.IMSUserDAO;
+import vn.credit.home.entity.mssql.SecUser;
+import vn.credit.home.entity.mssql.UserMenu;
 
+/**
+ * @author loc.mh
+ *
+ */
 @Transactional
 @Repository
-public class UserDAO implements IUserDAO {
+public class MSUserDAO implements IMSUserDAO {
 	Logger logger = LoggerFactory.getLogger(this.getClass());
 
 	@Autowired
-	@Qualifier("oracleEntityManager")
+	@Qualifier("mssqlEntityManager")
 	EntityManager entityManager;
 
 	private Session getsession(EntityManager entityManager) {
@@ -58,11 +65,6 @@ public class UserDAO implements IUserDAO {
 		return getsession(entityManager).get(SecUser.class, userId);
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see Get user menu by execute stored procedure SP_SEC_USER_MENU_GET
-	 */
 	@Override
 	public List<UserMenu> getUserMenu(String userName, String appId) {
 		Session session = getsession(entityManager);
@@ -79,7 +81,6 @@ public class UserDAO implements IUserDAO {
 			return ((ResultSetOutput) output).getResultList();
 		}
 		return new ArrayList<>();
-
 	}
 
 }

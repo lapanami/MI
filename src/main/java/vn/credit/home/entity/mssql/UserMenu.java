@@ -15,7 +15,6 @@ import org.hibernate.annotations.QueryHints;
 @Entity
 @NamedStoredProcedureQuery(name = "getUserMenu", procedureName = "SP_SEC_USER_MENU_GET", resultClasses = {
 		UserMenu.class }, parameters = {
-				@StoredProcedureParameter(name = "O_RECORDSET", type = void.class, mode = ParameterMode.REF_CURSOR),
 				@StoredProcedureParameter(name = "I_USERNAME", type = String.class, mode = ParameterMode.IN),
 				@StoredProcedureParameter(name = "I_APPLICATION_ID", type = String.class, mode = ParameterMode.IN) }, hints = {
 						@QueryHint(value = "true", name = QueryHints.CALLABLE) })

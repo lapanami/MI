@@ -10,18 +10,18 @@ import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 
 /**
- * The persistent class for the SEC_USER_ROLE database table.
+ * The persistent class for the SEC_ROLE_PAGE database table.
  * 
  */
 @Entity
-@Table(name = "SEC_USER_ROLE")
-@NamedQuery(name = "SecUserRole.findAll", query = "SELECT s FROM SecUserRole s")
-public class SecUserRole implements Serializable {
+@Table(name = "SEC_ROLE_PAGE")
+@NamedQuery(name = "SecRolePage.findAll", query = "SELECT s FROM SecRolePage s")
+public class SecRolePage implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@Column(name = "USER_ROLE_ID")
-	private String userRoleId;
+	@Column(name = "ROLE_PAGE_ID")
+	private String rolePageId;
 
 	@Column(name = "CREATED_BY")
 	private String createdBy;
@@ -35,6 +35,9 @@ public class SecUserRole implements Serializable {
 	@Column(name = "LAST_CHANGED_DATE")
 	private Timestamp lastChangedDate;
 
+	@Column(name = "PAGE_ID")
+	private String pageId;
+
 	@Column(name = "REMARK")
 	private String remark;
 
@@ -44,18 +47,15 @@ public class SecUserRole implements Serializable {
 	@Column(name = "STATUS")
 	private int status;
 
-	@Column(name = "USER_ID")
-	private String userId;
-
-	public SecUserRole() {
+	public SecRolePage() {
 	}
 
-	public String getUserRoleId() {
-		return this.userRoleId;
+	public String getRolePageId() {
+		return this.rolePageId;
 	}
 
-	public void setUserRoleId(String userRoleId) {
-		this.userRoleId = userRoleId;
+	public void setRolePageId(String rolePageId) {
+		this.rolePageId = rolePageId;
 	}
 
 	public String getCreatedBy() {
@@ -90,6 +90,14 @@ public class SecUserRole implements Serializable {
 		this.lastChangedDate = lastChangedDate;
 	}
 
+	public String getPageId() {
+		return this.pageId;
+	}
+
+	public void setPageId(String pageId) {
+		this.pageId = pageId;
+	}
+
 	public String getRemark() {
 		return this.remark;
 	}
@@ -112,14 +120,6 @@ public class SecUserRole implements Serializable {
 
 	public void setStatus(int status) {
 		this.status = status;
-	}
-
-	public String getUserId() {
-		return this.userId;
-	}
-
-	public void setUserId(String userId) {
-		this.userId = userId;
 	}
 
 }

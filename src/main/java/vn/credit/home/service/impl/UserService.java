@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
+import vn.credit.home.dao.mssql.IMSUserDAO;
 import vn.credit.home.dao.oracle.IUserDAO;
 import vn.credit.home.entity.oracle.SecUser;
 import vn.credit.home.entity.oracle.UserMenu;
@@ -19,6 +20,9 @@ public class UserService implements IUserService {
 
 	@Autowired
 	IUserDAO userDAO;
+
+	@Autowired
+	IMSUserDAO msuserDAO;
 
 	@Override
 	public List<SecUser> listAllUser() {
@@ -51,6 +55,16 @@ public class UserService implements IUserService {
 	@Override
 	public List<UserMenu> getUserMenu(String userName) {
 		return userDAO.getUserMenu(userName, appId);
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see vn.credit.home.service.IUserService#listAllMSUser()
+	 */
+	@Override
+	public List<vn.credit.home.entity.mssql.SecUser> listAllMSUser() {
+		return msuserDAO.listAllUser();
 	}
 
 }

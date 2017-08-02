@@ -13,4 +13,6 @@ public interface IUserService {
 	SecUser getUserByUserId(String userId);
 
 	List<UserMenu> getUserMenu(String userName);
+
+	List<vn.credit.home.entity.mssql.SecUser> listAllMSUser();
 }
