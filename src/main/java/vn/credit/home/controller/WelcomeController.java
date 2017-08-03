@@ -43,6 +43,7 @@ public class WelcomeController {
 		ObjectMapper om = new ObjectMapper();
 		try {
 			model.addAttribute("jsonListUser", om.writeValueAsString(listUser));
+			model.addAttribute("jsonListMSUser", om.writeValueAsString(listMSUser));
 		} catch (JsonGenerationException e) {
 			logger.error(e.getMessage());
 			e.printStackTrace();

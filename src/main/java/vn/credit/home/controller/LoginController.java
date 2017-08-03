@@ -1,6 +1,9 @@
 package vn.credit.home.controller;
 
+import javax.servlet.ServletContext;
+
 import org.apache.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -15,8 +18,12 @@ import org.springframework.web.bind.annotation.RequestMethod;
 public class LoginController {
 	Logger logger = Logger.getLogger(getClass());
 
+	@Autowired
+	private ServletContext servletContext;
+
 	@RequestMapping(method = RequestMethod.GET)
 	public String login(Model model) {
+		model.addAttribute("contextPath", servletContext.getContextPath());
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 		String info = auth.getPrincipal().toString();
 		if (info == null || "anonymousUser".equalsIgnoreCase(info)) {

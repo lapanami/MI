@@ -9,7 +9,6 @@ import org.springframework.stereotype.Service;
 import vn.credit.home.dao.mssql.IMSUserDAO;
 import vn.credit.home.dao.oracle.IUserDAO;
 import vn.credit.home.entity.oracle.SecUser;
-import vn.credit.home.entity.oracle.UserMenu;
 import vn.credit.home.service.IUserService;
 
 @Service
@@ -53,8 +52,8 @@ public class UserService implements IUserService {
 	 * @see Get user menu by execute stored procedure SP_SEC_USER_MENU_GET
 	 */
 	@Override
-	public List<UserMenu> getUserMenu(String userName) {
-		return userDAO.getUserMenu(userName, appId);
+	public List<vn.credit.home.entity.mssql.UserMenu> getUserMenu(String userName) {
+		return msuserDAO.getUserMenu(userName, appId);
 	}
 
 	/*
