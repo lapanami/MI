@@ -155,8 +155,8 @@
                             </form>
                           </div>
                           <div class="modal-footer">
+                            <button type="button" class="btn btn-success" data-dismiss="modal" id="btnSave">Save</button>
                             <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                            <button type="button" class="btn btn-success" data-dismiss="modal">Save</button>
                           </div>
                         </div>
 
@@ -229,8 +229,8 @@
     }
     function setUserInfo(user) {
         $("#userName").html(user.userName);
-        $("#firstName").html(user.firstName);
-        $("#lastName").html(user.lastName);
+        $("#firstName").val(user.firstName);
+        $("#lastName").val(user.lastName);
         $("#email").html(user.email);
         if (user.status) {
             $("#status").html("Active");
@@ -242,8 +242,10 @@
         var user;
         if (!userId.userId) {
             user = mapUser[userId];
+            $("#btnSave").prop('disabled', true);
         } else {
             user = userId;
+            $("#btnSave").prop('disabled', false);
         }
         setUserInfo(user? user : mapMSUser[userId]);
         $("#myModal").modal("toggle");
