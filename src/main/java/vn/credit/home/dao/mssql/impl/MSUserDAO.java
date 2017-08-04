@@ -4,12 +4,17 @@
 package vn.credit.home.dao.mssql.impl;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.persistence.EntityManager;
 
+import org.apache.commons.lang3.StringUtils;
 import org.hibernate.Criteria;
+import org.hibernate.ScrollableResults;
 import org.hibernate.Session;
+import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
 import org.hibernate.procedure.ProcedureCall;
 import org.hibernate.result.Output;
@@ -81,6 +86,33 @@ public class MSUserDAO implements IMSUserDAO {
 			return ((ResultSetOutput) output).getResultList();
 		}
 		return new ArrayList<>();
+	}
+
+	@Override
+	public long countUser() {
+		Session session = getsession(entityManager);
+		Criteria crit = session.createCriteria(SecUser.class);
+		return (long) crit.setProjection(Projections.rowCount()).uniqueResult();
+	}
+
+	@Override
+	public Map<String, Object> searchUser(int start, int length, String searchKey) {
+		Map<String, Object> result = new HashMap<>();
+		Session session = getsession(entityManager);
+		Criteria crit = session.createCriteria(SecUser.class);
+		if (StringUtils.isNotEmpty(searchKey)) {
+			crit.add(Restrictions.like("userName", "%" + searchKey + "%"));
+		}
+
+		ScrollableResults results = crit.scroll();
+		results.last();
+		int total = results.getRowNumber() + 1;
+		results.close();
+
+		crit.setFirstResult(start).setMaxResults(length);
+		result.put("data", crit.list());
+		result.put("total", total);
+		return result;
 	}
 
 }

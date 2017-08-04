@@ -1,6 +1,18 @@
 <#include "/common/header.html">
-    <script src="static/js/jquery.dataTables.min.js"></script>
-    <script src="static/js/dataTables.bootstrap.min.js"></script>
+    <style type="text/css" rel="stylesheet">
+        .modal-body ul li label
+        {
+            width: 90px;
+        }
+        ul {
+            list-style-type: none;
+        }
+        li {
+            margin-bottom: 5px;
+        }
+    </style>
+    <script src="${contextPath}/static/js/jquery.dataTables.min.js"></script>
+    <script src="${contextPath}/static/js/dataTables.bootstrap.min.js"></script>
     <table style="width: 100%" cellpadding="0" cellspacing="0" class="dev_page_border">
         <tr>
             <td style="width: 10px">
@@ -9,8 +21,8 @@
             <table cellpadding="2" cellspacing="2" class="dev_company_title">
                 <tr>        
                     <td style="width: 100px" valign="bottom">
-                        <a href="/">
-                            <img src="images/logo-home-credit-group.gif" alt="" /></a>
+                        <a href="${contextPath}/">
+                            <img src="${contextPath}/images/logo-home-credit-group.gif" alt="" /></a>
                     </td>
                     <td class="dev_top_center">
                         Home Credit Vietnam
@@ -26,7 +38,7 @@
                                         </td>
                                         <td>
                                             <a class="dev_color_link" href="/Help">
-                                                <img src="images/help_20.png" alt="Help" />
+                                                <img src="${contextPath}/images/help_20.png" alt="Help" />
                                             </a>
                                         </td>
                                     </tr>
@@ -34,10 +46,10 @@
                                         <td>
                                                 <p>
                                                     HELLO ${user.username}
-            [<a href="/logout">Log Out</a>]                                    </p>
+            [<a href="${contextPath}/logout">Log Out</a>]                                    </p>
                                         </td>
                                         <td>
-                                            <img src="images/user.png" alt="User Profile" />
+                                            <img src="${contextPath}/images/user.png" alt="User Profile" />
                                         </td>
                                     </tr>
                                 </table>
@@ -52,10 +64,10 @@
             <#include "/common/menu.html">
             <div class="dev_breadcrumb">
                 <div class="dev_breadcrumb_left">
-                    <a href="/">Home</a></div>
+                    <a href="${contextPath}/">Home</a></div>
                 <div class="dev_breadcrumb_right">
                     
-                <a href="/">Home</a>
+                <a href="${contextPath}/">Home</a>
                 </div>
             </div>
             <div id="div_notify" style="display: none;">
@@ -71,7 +83,7 @@
                             </td>
                             <td style="width: 1%" valign="top">
                                 <a onclick="closeClientMessage()">
-                                    <img src="images/cancel_16.png" /></a>
+                                    <img src="${contextPath}/images/cancel_16.png" /></a>
                             </td>
                         </tr>
                     </table>
@@ -120,19 +132,6 @@
                                 <th>Created Date</th>
                             </tr>
                         </thead>
-                        <tbody>
-                            <#list listMSUser as user>
-                            <tr data-uid="${user.userId}">
-                                <td>${user.firstName}</td>
-                                <td>${user.lastName}</td>
-                                <td>${user.userName}</td>
-                                <td>${user.hrTitle}</td>
-                                <td>${user.email}</td>
-                                <td>${user.createdBy}</td>
-                                <td><#if user.createdDate??> ${user.createdDate?string["dd.MM.yyyy"]} </#if></td>
-                            </tr>
-                        </#list>
-                        </tbody>
                     </table>
                     <div id="myModal" class="modal fade" role="dialog">
                       <div class="modal-dialog">
@@ -144,16 +143,20 @@
                             <h4 class="modal-title">User Information</h4>
                           </div>
                           <div class="modal-body">
-                            <ul>
-                                <li>Username:<b id="userName"></b></li>
-                                <li>First Name:<b id="firstName"></b></li>
-                                <li>Last Name:<b id="lastName"></b></li>
-                                <li>Email:<b id="email"></b></li>
-                                <li>Status:<b id="status"></b></li>
-                            </ul>
+                            <form action="/user/put">
+                                <input type="hidden" name="userId">
+                                <ul>
+                                    <li><label>Username:</label><b class="form-control" id="userName"></b></li>
+                                    <li><label>First Name:</label><input type="text" name="firstName" placeholder="First Name" class="form-control" id="firstName"></li>
+                                    <li><label>Last Name:</label><input type="text" name="lastName" placeholder="Last Name" class="form-control" id="lastName"></li>
+                                    <li><label>Email:</label><b class="form-control" id="email"></b></li>
+                                    <li><label>Status:</label><b class="form-control" id="status"></b></li>
+                                </ul>
+                            </form>
                           </div>
                           <div class="modal-footer">
                             <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                            <button type="button" class="btn btn-success" data-dismiss="modal">Save</button>
                           </div>
                         </div>
 
@@ -168,7 +171,7 @@
                     rights reserved.
                 </div>
                 <div id="div_loading" style="display: none;">
-                    <img src="images/ajax-loader-2.gif" />
+                    <img src="${contextPath}/images/ajax-loader-2.gif" />
                 </div>
                 <div id="div_overlay">
                 </div>            
@@ -178,6 +181,7 @@
         </tr>
     </table>
 <script type="text/javascript">
+    var contextPath = <#if contextPath??>'${contextPath}'<#else>''</#if> + "/";
     var userList = $("#userList").DataTable({
         "language": {
             "info": "Showing _START_ to _END_ of _TOTAL_ users"
@@ -192,7 +196,27 @@
         },
         "fnDrawCallback": function( oSettings ) {
             $('#userList1 tbody tr').css("cursor", "pointer");
-        }
+        },
+        "sServerMethod": "POST",
+        "processing": true,
+        "serverSide": true,
+        'ajax': {
+            'contentType': 'application/json',
+            'url': contextPath + "userlist",
+            'type': 'POST',
+            'data': function(d) {
+                return JSON.stringify(d);
+            }
+        },
+        "columns": [
+            { "data": "firstName" },
+            { "data": "lastName" },
+            { "data": "userName" },
+            { "data": "hrTitle" },
+            { "data": "email" },
+            { "data": "createdBy" },
+            { "data": "createdDate" }
+        ]
     });
     var jsonListUser = <#if jsonListUser??>${jsonListUser}<#else >''</#if>;
     var jsonListMSUser = <#if jsonListMSUser??>${jsonListMSUser}<#else >''</#if>;
@@ -215,11 +239,16 @@
         }
     }
     function userInfo(userId) {
-        var user = mapUser[userId];
+        var user;
+        if (!userId.userId) {
+            user = mapUser[userId];
+        } else {
+            user = userId;
+        }
         setUserInfo(user? user : mapMSUser[userId]);
         $("#myModal").modal("toggle");
     }
-    $('#userList tbody, #userList1 tbody').on( 'click', 'tr', function () {
+    $('#userList tbody').on( 'click', 'tr', function () {
         if ( $(this).hasClass('selected') ) {
             $(this).removeClass('selected');
         }
@@ -228,6 +257,16 @@
             $(this).addClass('selected');
         }
         userInfo($(this).attr("data-uid"));
+    } );
+    $('#userList1 tbody').on( 'click', 'tr', function () {
+        if ( $(this).hasClass('selected') ) {
+            $(this).removeClass('selected');
+        }
+        else {
+            $(this).parent().find('tr.selected').removeClass('selected');
+            $(this).addClass('selected');
+        }
+        userInfo(userList1.row(this).data());
     } );
 </script>
 <#include "/common/footer.html">
