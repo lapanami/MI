@@ -1,6 +1,7 @@
 package vn.credit.home.service.impl;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -64,6 +65,27 @@ public class UserService implements IUserService {
 	@Override
 	public List<vn.credit.home.entity.mssql.SecUser> listAllMSUser() {
 		return msuserDAO.listAllUser();
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see vn.credit.home.service.IUserService#countUser()
+	 */
+	@Override
+	public long countUser() {
+		return msuserDAO.countUser();
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see vn.credit.home.service.IUserService#searchUser(int, int,
+	 * java.lang.String)
+	 */
+	@Override
+	public Map<String, Object> searchUser(int start, int length, String searchKey) {
+		return msuserDAO.searchUser(start, length, searchKey);
 	}
 
 }

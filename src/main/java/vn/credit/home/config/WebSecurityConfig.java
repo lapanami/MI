@@ -13,6 +13,7 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.ldap.authentication.ad.ActiveDirectoryLdapAuthenticationProvider;
+import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 @Configuration
 @EnableWebSecurity
@@ -33,7 +34,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 				.failureUrl("/?error=errorLoginFail");
 		http.authorizeRequests().antMatchers("/welcome").access("isAuthenticated()");
 		http.exceptionHandling().accessDeniedPage("/?error=errorAccessDenied").and().logout()
-				.invalidateHttpSession(true).logoutUrl("/logout").logoutSuccessUrl("/");
+				.logoutRequestMatcher(new AntPathRequestMatcher("/logout")).logoutSuccessUrl("/")
+				.invalidateHttpSession(true);
 		http.csrf().ignoringAntMatchers("/*");
 	}
 
