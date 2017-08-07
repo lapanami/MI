@@ -8,14 +8,14 @@ package vn.credit.home.util.param;
  *
  */
 public class Order {
-	public int column;
+	public String column;
 	public String dir;
 
-	public int getColumn() {
+	public String getColumn() {
 		return column;
 	}
 
-	public void setColumn(int column) {
+	public void setColumn(String column) {
 		this.column = column;
 	}
 

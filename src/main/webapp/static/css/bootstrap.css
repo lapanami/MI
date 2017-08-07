@@ -5017,10 +5017,14 @@ a.thumbnail.active {
   color: #333;
 }
 .alert {
+  position: fixed;
   padding: 15px;
   margin-bottom: 20px;
   border: 1px solid transparent;
   border-radius: 4px;
+  top: 10px;
+  right: 10px;
+  z-index: 9999;
 }
 .alert h4 {
   margin-top: 0;

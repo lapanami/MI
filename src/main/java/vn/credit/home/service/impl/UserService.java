@@ -11,6 +11,7 @@ import vn.credit.home.dao.mssql.IMSUserDAO;
 import vn.credit.home.dao.oracle.IUserDAO;
 import vn.credit.home.entity.oracle.SecUser;
 import vn.credit.home.service.IUserService;
+import vn.credit.home.util.param.Order;
 
 @Service
 public class UserService implements IUserService {
@@ -39,9 +40,9 @@ public class UserService implements IUserService {
 	}
 
 	@Override
-	public SecUser getUserByUserId(String userId) {
+	public vn.credit.home.entity.mssql.SecUser getUserByUserId(String userId) {
 		try {
-			return userDAO.getUserByUserId(userId);
+			return msuserDAO.getUserByUserId(userId);
 		} catch (Exception ex) {
 			return null;
 		}
@@ -86,6 +87,22 @@ public class UserService implements IUserService {
 	@Override
 	public Map<String, Object> searchUser(int start, int length, String searchKey) {
 		return msuserDAO.searchUser(start, length, searchKey);
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see vn.credit.home.service.IUserService#searchUser(int, int,
+	 * java.lang.String, vn.credit.home.util.param.Order)
+	 */
+	@Override
+	public Map<String, Object> searchUser(int start, int length, String searchKey, List<Order> orders) {
+		return msuserDAO.searchUser(start, length, searchKey, orders);
+	}
+
+	@Override
+	public void putUser(vn.credit.home.entity.mssql.SecUser user) {
+		msuserDAO.putUser(user);
 	}
 
 }

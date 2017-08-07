@@ -14,6 +14,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.hibernate.Criteria;
 import org.hibernate.ScrollableResults;
 import org.hibernate.Session;
+import org.hibernate.Transaction;
 import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
 import org.hibernate.procedure.ProcedureCall;
@@ -29,6 +30,7 @@ import org.springframework.transaction.annotation.Transactional;
 import vn.credit.home.dao.mssql.IMSUserDAO;
 import vn.credit.home.entity.mssql.SecUser;
 import vn.credit.home.entity.mssql.UserMenu;
+import vn.credit.home.util.param.Order;
 
 /**
  * @author loc.mh
@@ -113,6 +115,49 @@ public class MSUserDAO implements IMSUserDAO {
 		result.put("data", crit.list());
 		result.put("total", total);
 		return result;
+	}
+
+	@Override
+	public Map<String, Object> searchUser(int start, int length, String searchKey, List<Order> orders) {
+		Map<String, Object> result = new HashMap<>();
+		Session session = getsession(entityManager);
+		Criteria crit = session.createCriteria(SecUser.class);
+		if (StringUtils.isNotEmpty(searchKey)) {
+			crit.add(Restrictions.like("userName", "%" + searchKey + "%"));
+		}
+
+		ScrollableResults results = crit.scroll();
+		results.last();
+		int total = results.getRowNumber() + 1;
+		results.close();
+
+		crit.setFirstResult(start).setMaxResults(length);
+		for (Order order : orders) {
+			if (StringUtils.isNotEmpty(order.getColumn())) {
+				if ("asc".equalsIgnoreCase(order.getDir())) {
+					crit.addOrder(org.hibernate.criterion.Order.asc(order.getColumn()));
+				} else {
+					crit.addOrder(org.hibernate.criterion.Order.desc(order.getColumn()));
+				}
+			}
+		}
+		result.put("data", crit.list());
+		result.put("total", total);
+		return result;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see vn.credit.home.dao.mssql.IMSUserDAO#putUser(vn.credit.home.entity.mssql.
+	 * SecUser)
+	 */
+	@Override
+	public void putUser(SecUser user) {
+		Session session = getsession(entityManager);
+		Transaction tx = session.beginTransaction();
+		session.saveOrUpdate(user);
+		tx.commit();
 	}
 
 }

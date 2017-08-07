@@ -13,6 +13,7 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.ldap.authentication.ad.ActiveDirectoryLdapAuthenticationProvider;
+import org.springframework.security.web.csrf.CsrfFilter;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 @Configuration
@@ -30,9 +31,10 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
-		http.authorizeRequests().antMatchers("/static/**", "/").permitAll().and().formLogin().loginPage("/")
-				.failureUrl("/?error=errorLoginFail");
-		http.authorizeRequests().antMatchers("/welcome").access("isAuthenticated()");
+		http.addFilterAfter(new CSRFTokenGeneratorFilter(), CsrfFilter.class);
+		http.authorizeRequests().antMatchers("/static/**", "/", "/logout", "/images/**").permitAll().and().formLogin()
+				.loginPage("/").defaultSuccessUrl("/welcome").failureUrl("/?error=errorLoginFail");
+		http.authorizeRequests().anyRequest().access("isAuthenticated()");
 		http.exceptionHandling().accessDeniedPage("/?error=errorAccessDenied").and().logout()
 				.logoutRequestMatcher(new AntPathRequestMatcher("/logout")).logoutSuccessUrl("/")
 				.invalidateHttpSession(true);

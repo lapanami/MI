@@ -40,7 +40,7 @@ public class UserListController {
 		result.setDraw(data.getDraw());
 		result.setRecordsTotal(userService.countUser());
 		Map<String, Object> dataResult = userService.searchUser(data.getStart(), data.getLength(),
-				data.getSearch().getValue());
+				data.getSearch().getValue(), data.getOrder());
 		result.setRecordsFiltered(Long.parseLong(String.valueOf(dataResult.get("total"))));
 		result.setData(dataResult.get("data"));
 		return result;

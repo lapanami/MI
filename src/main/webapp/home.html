@@ -143,8 +143,9 @@
                             <h4 class="modal-title">User Information</h4>
                           </div>
                           <div class="modal-body">
-                            <form action="/user/put">
-                                <input type="hidden" name="userId">
+                            <form action="${contextPath}/user/put" id="userPutForm">
+                                <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+                                <input type="hidden" name="userId" id="userId">
                                 <ul>
                                     <li><label>Username:</label><b class="form-control" id="userName"></b></li>
                                     <li><label>First Name:</label><input type="text" name="firstName" placeholder="First Name" class="form-control" id="firstName"></li>
@@ -155,7 +156,7 @@
                             </form>
                           </div>
                           <div class="modal-footer">
-                            <button type="button" class="btn btn-success" data-dismiss="modal" id="btnSave">Save</button>
+                            <button type="button" class="btn btn-success" id="btnSave">Save</button>
                             <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
                           </div>
                         </div>
@@ -180,6 +181,10 @@
             </td>
         </tr>
     </table>
+<div class="alert alert-success alert-dismissible" id="alert">
+    <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+    <strong>Success!</strong> <i>This alert box could indicate a successful or positive action.</i>
+</div>
 <script type="text/javascript">
     var contextPath = <#if contextPath??>'${contextPath}'<#else>''</#if> + "/";
     var userList = $("#userList").DataTable({
@@ -209,14 +214,19 @@
             }
         },
         "columns": [
-            { "data": "firstName" },
-            { "data": "lastName" },
-            { "data": "userName" },
-            { "data": "hrTitle" },
-            { "data": "email" },
-            { "data": "createdBy" },
-            { "data": "createdDate" }
-        ]
+            { "data": "firstName", "name": "firstName", "title": "First Name" },
+            { "data": "lastName", "name": "lastName", "title": "last Name" },
+            { "data": "userName", "name": "userName", "title": "User Name" },
+            { "data": "hrTitle", "name": "hrTitle", "title": "HR Title" },
+            { "data": "email", "name": "email", "title": "Email" },
+            { "data": "createdBy", "name": "createdBy", "title": "Created By" },
+            { "data": "createdDate", "name": "createdDate", "title": "Created Date" }
+        ],
+        fnServerParams: function(data) {
+            data['order'].forEach(function(items, index) {
+                data['order'][index]['column'] = data['columns'][items.column]['data'];
+            });
+        },
     });
     var jsonListUser = <#if jsonListUser??>${jsonListUser}<#else >''</#if>;
     var jsonListMSUser = <#if jsonListMSUser??>${jsonListMSUser}<#else >''</#if>;
@@ -237,6 +247,7 @@
         } else {
             $("#status").html("Inactive");
         }
+        $("#userId").val(user.userId);
     }
     function userInfo(userId) {
         var user;
@@ -249,6 +260,17 @@
         }
         setUserInfo(user? user : mapMSUser[userId]);
         $("#myModal").modal("toggle");
+    }
+    function validateUserForm() {
+        if (!$("#userId").val()) {
+            return "Wrong input parameter, cannot find user identity in request, please request the page!";
+        }
+        if (!$("#firstName").val()) {
+            return "Wrong input parameter, First Name cannot be empty!";
+        }
+        if (!$("#lastName").val()) {
+            return "Wrong input parameter, Last Name cannot be empty!";
+        }
     }
     $('#userList tbody').on( 'click', 'tr', function () {
         if ( $(this).hasClass('selected') ) {
@@ -270,5 +292,56 @@
         }
         userInfo(userList1.row(this).data());
     } );
+    $("#alert").hide();
+    $('#myModal').on('hidden.bs.modal', function () {
+        setTimeout(function() {
+            userList1.ajax.reload(null, false);
+        }, 200);
+    })
+    $( "#btnSave" ).click(function() {
+        var errMessage = validateUserForm();
+        if (!errMessage) {
+            $("#userPutForm").ajaxSubmit({
+                url: contextPath + 'user/put', 
+                type: 'post',
+                error: function(result) {
+                    $("#alert").removeClass("alert-success").addClass("alert-danger");
+                    $("#alert strong").html("Error!");
+                    $("#alert i").html("Cannot connect to server!");
+                    $("#alert").show();
+                    setTimeout(function() {
+                        $("#alert").hide();
+                    }, 5000);
+                },
+                success: function(result) {
+                    if (result.error == 0) {
+                        $("#alert").removeClass("danger-danger").addClass("alert-success");
+                        $("#alert strong").html("Success!");
+                        $("#alert i").html(result.message);
+                        $("#alert").show();
+                        setTimeout(function() {
+                            $("#alert").hide();
+                        }, 5000);
+                    } else {
+                        $("#alert").removeClass("alert-success").addClass("alert-danger");
+                        $("#alert strong").html("Error!");
+                        $("#alert i").html(result.message);
+                        $("#alert").show();
+                        setTimeout(function() {
+                            $("#alert").hide();
+                        }, 5000);
+                    }
+                }
+            });
+        } else {
+            $("#alert").removeClass("alert-success").addClass("alert-danger");
+            $("#alert strong").html("Error!");
+            $("#alert i").html(errMessage);
+            $("#alert").show();
+            setTimeout(function() {
+                $("#alert").hide();
+            }, 5000);
+        }
+    });
 </script>
 <#include "/common/footer.html">

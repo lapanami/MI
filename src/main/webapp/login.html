@@ -88,6 +88,7 @@
                         <tr>
                             <td>
                                 <form action="${contextPath}/" id="form_login" method="POST">
+                                <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
 <input id="ReturnUrl" name="ReturnUrl" type="hidden" value="/" />    
 	<table width="100%">
         <tr>

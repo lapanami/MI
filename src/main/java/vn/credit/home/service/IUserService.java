@@ -4,13 +4,14 @@ import java.util.List;
 import java.util.Map;
 
 import vn.credit.home.entity.oracle.SecUser;
+import vn.credit.home.util.param.Order;
 
 public interface IUserService {
 	List<SecUser> listAllUser();
 
 	SecUser getUserByUserName(String userName);
 
-	SecUser getUserByUserId(String userId);
+	vn.credit.home.entity.mssql.SecUser getUserByUserId(String userId);
 
 	List<vn.credit.home.entity.mssql.UserMenu> getUserMenu(String userName);
 
@@ -19,4 +20,8 @@ public interface IUserService {
 	long countUser();
 
 	Map<String, Object> searchUser(int start, int length, String searchKey);
+
+	Map<String, Object> searchUser(int start, int length, String searchKey, List<Order> orders);
+
+	void putUser(vn.credit.home.entity.mssql.SecUser user);
 }
