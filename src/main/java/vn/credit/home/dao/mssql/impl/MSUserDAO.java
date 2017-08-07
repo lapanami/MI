@@ -5,6 +5,7 @@ package vn.credit.home.dao.mssql.impl;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -24,6 +25,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -40,6 +42,9 @@ import vn.credit.home.util.param.Order;
 @Repository
 public class MSUserDAO implements IMSUserDAO {
 	Logger logger = LoggerFactory.getLogger(this.getClass());
+
+	@Value("${application.id.blank}")
+	String blankId;
 
 	@Autowired
 	@Qualifier("mssqlEntityManager")
@@ -146,18 +151,40 @@ public class MSUserDAO implements IMSUserDAO {
 		return result;
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see vn.credit.home.dao.mssql.IMSUserDAO#putUser(vn.credit.home.entity.mssql.
-	 * SecUser)
-	 */
 	@Override
 	public void putUser(SecUser user) {
 		Session session = getsession(entityManager);
 		Transaction tx = session.beginTransaction();
 		session.saveOrUpdate(user);
 		tx.commit();
+	}
+
+	@Override
+	public Map<String, Object> mapUserMenu(String userName, String appId) {
+		List<UserMenu> listMenu = getUserMenu(userName, appId);
+		if (listMenu.isEmpty()) {
+			return new LinkedHashMap<>();
+		}
+		Map<String, Object> result = new LinkedHashMap<>();
+		Map<String, List<String>> treeMenu = new LinkedHashMap<>();
+		Map<String, UserMenu> mapMenu = new LinkedHashMap<>();
+		listMenu.stream().forEach((menu) -> {
+			mapMenu.put(menu.getPageId(), menu);
+			if (!blankId.equalsIgnoreCase(menu.getPageParentId())) {
+				Object object = treeMenu.get(menu.getPageParentId());
+				List<String> listSub;
+				if (object == null) {
+					listSub = new ArrayList<>();
+				} else {
+					listSub = (List<String>) object;
+				}
+				listSub.add(menu.getPageId());
+				treeMenu.put(menu.getPageParentId(), listSub);
+			}
+		});
+		result.put("map", mapMenu);
+		result.put("tree", treeMenu);
+		return result;
 	}
 
 }

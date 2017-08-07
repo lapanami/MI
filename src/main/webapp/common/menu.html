@@ -1,18 +1,20 @@
 <div class="jqueryslidemenu ui-helper-clearfix" id="myslidemenu">
-    <#assign controllerName="">
     <ul>
-        <#list listMenu as menu>
-            <#if controllerName != menu.controllerName>
+        <#if theMenu??>
+            <#list theMenu['tree']?keys as key>
+                <#assign tree=theMenu['tree'][key]>
                 <li>
-                    <a href='/${menu.controllerName}/${menu.pageName}' title='${menu.pageTitle}'>${menu.pageTitle}</a>
+                <a href="${theMenu['map'][key].pageName}" title="${theMenu['map'][key].pageTitle}">${theMenu['map'][key].pageTitle}</a>
+                <ul>
+                <#list tree as key1>
+                    <li>
+                    <a href="/${theMenu['map'][key1].controllerName}/${theMenu['map'][key1].pageName}" title="${theMenu['map'][key1].pageTitle}">${theMenu['map'][key1].pageTitle}</a>
+                    </li>
+                </#list>
+                </ul>
                 </li>
-                <#assign controllerName=menu.controllerName>
-            <#else>
-                <li>
-                    <a href='/${menu.controllerName}/${menu.pageName}' title='${menu.pageTitle}'>${menu.pageTitle}</a>
-                </li>
-            </#if>
-        </#list>
+            </#list>
+        </#if>
     </ul>
     <div class="clr">
     </div>

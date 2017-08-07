@@ -23,6 +23,8 @@ public interface IMSUserDAO {
 
 	List<UserMenu> getUserMenu(String userName, String appId);
 
+	Map<String, Object> mapUserMenu(String userName, String appId);
+
 	long countUser();
 
 	Map<String, Object> searchUser(int start, int length, String searchKey);

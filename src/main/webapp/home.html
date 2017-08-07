@@ -4,10 +4,10 @@
         {
             width: 90px;
         }
-        ul {
+        .modal-body ul {
             list-style-type: none;
         }
-        li {
+        .modal-body li {
             margin-bottom: 5px;
         }
     </style>
@@ -45,7 +45,7 @@
                                     <tr>
                                         <td>
                                                 <p>
-                                                    HELLO ${user.username}
+                                                    HELLO ${user.username?upper_case}
             [<a href="${contextPath}/logout">Log Out</a>]                                    </p>
                                         </td>
                                         <td>

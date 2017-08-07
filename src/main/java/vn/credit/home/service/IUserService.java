@@ -15,6 +15,8 @@ public interface IUserService {
 
 	List<vn.credit.home.entity.mssql.UserMenu> getUserMenu(String userName);
 
+	Map<String, Object> mapUserMenu(String userName);
+
 	List<vn.credit.home.entity.mssql.SecUser> listAllMSUser();
 
 	long countUser();
