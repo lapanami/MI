@@ -9,17 +9,31 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.converter.HttpMessageConverter;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
-import org.springframework.web.servlet.config.annotation.WebMvcConfigurationSupport;
+import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
+
+import vn.credit.home.config.interceptor.SecurityInterceptor;
 
 /**
  * @author loc.mh
  *
  */
 @Configuration
-public class WebConfig extends WebMvcConfigurationSupport {
+public class WebConfig extends WebMvcConfigurerAdapter {
+	@Bean
+	SecurityInterceptor securityInterceptor() {
+		return new SecurityInterceptor();
+	}
+
+	@Override
+	public void addInterceptors(InterceptorRegistry registry) {
+		System.out.println("Adding interceptors ==================================");
+		registry.addInterceptor(securityInterceptor()).addPathPatterns("/**");
+		super.addInterceptors(registry);
+	}
 
 	@Bean
 	public MappingJackson2HttpMessageConverter customJackson2HttpMessageConverter() {
@@ -33,6 +47,6 @@ public class WebConfig extends WebMvcConfigurationSupport {
 	@Override
 	public void configureMessageConverters(List<HttpMessageConverter<?>> converters) {
 		converters.add(customJackson2HttpMessageConverter());
-		super.addDefaultHttpMessageConverters(converters);
+		// super.addDefaultHttpMessageConverters(converters);
 	}
 }

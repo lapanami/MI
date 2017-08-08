@@ -180,6 +180,10 @@ public class MSUserDAO implements IMSUserDAO {
 				}
 				listSub.add(menu.getPageId());
 				treeMenu.put(menu.getPageParentId(), listSub);
+			} else {
+				if (!treeMenu.containsKey(menu.getPageId())) {
+					treeMenu.put(menu.getPageId(), new ArrayList<>());
+				}
 			}
 		});
 		result.put("map", mapMenu);

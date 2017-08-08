@@ -221,7 +221,10 @@
             { "data": "hrTitle", "name": "hrTitle", "title": "HR Title" },
             { "data": "email", "name": "email", "title": "Email" },
             { "data": "createdBy", "name": "createdBy", "title": "Created By" },
-            { "data": "createdDate", "name": "createdDate", "title": "Created Date" }
+            { "data": "createdDate", "name": "createdDate", "title": "Created Date",
+                "render": function ( data, type, row ) {
+                    return (new Date(data)).toLocaleDateString("vi-vn");
+                } }
         ],
         fnServerParams: function(data) {
             data['order'].forEach(function(items, index) {
