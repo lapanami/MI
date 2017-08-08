@@ -105,4 +105,9 @@ public class UserService implements IUserService {
 		msuserDAO.putUser(user);
 	}
 
+	@Override
+	public Map<String, Object> mapUserMenu(String userName) {
+		return msuserDAO.mapUserMenu(userName, appId);
+	}
+
 }

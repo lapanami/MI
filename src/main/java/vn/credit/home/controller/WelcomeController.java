@@ -48,7 +48,7 @@ public class WelcomeController {
 		model.addAttribute("user", ldapUser);
 		model.addAttribute("listUser", listUser);
 		model.addAttribute("listMSUser", listMSUser);
-		model.addAttribute("listMenu", userService.getUserMenu(auth.getName()));
+		model.addAttribute("theMenu", userService.mapUserMenu(auth.getName()));
 		ObjectMapper om = new ObjectMapper();
 		try {
 			model.addAttribute("jsonListUser", om.writeValueAsString(listUser));
