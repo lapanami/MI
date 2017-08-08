@@ -182,10 +182,6 @@
             </td>
         </tr>
     </table>
-<div class="alert alert-success alert-dismissible" id="alert">
-    <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-    <strong>Success!</strong> <i>This alert box could indicate a successful or positive action.</i>
-</div>
 <script type="text/javascript">
     var contextPath = <#if contextPath??>'${contextPath}'<#else>''</#if> + "/";
     var userList = $("#userList").DataTable({
@@ -296,7 +292,6 @@
         }
         userInfo(userList1.row(this).data());
     } );
-    $("#alert").hide();
     $('#myModal').on('hidden.bs.modal', function () {
         setTimeout(function() {
             userList1.ajax.reload(null, false);
@@ -309,42 +304,18 @@
                 url: contextPath + 'user/put', 
                 type: 'post',
                 error: function(result) {
-                    $("#alert").removeClass("alert-success").addClass("alert-danger");
-                    $("#alert strong").html("Error!");
-                    $("#alert i").html("Cannot connect to server!");
-                    $("#alert").show();
-                    setTimeout(function() {
-                        $("#alert").hide();
-                    }, 5000);
+                    UpdateMessage("Cannot connect to server!", 'error');
                 },
                 success: function(result) {
                     if (result.error == 0) {
-                        $("#alert").removeClass("danger-danger").addClass("alert-success");
-                        $("#alert strong").html("Success!");
-                        $("#alert i").html(result.message);
-                        $("#alert").show();
-                        setTimeout(function() {
-                            $("#alert").hide();
-                        }, 5000);
+                        UpdateMessage("Update user success!", 'success');
                     } else {
-                        $("#alert").removeClass("alert-success").addClass("alert-danger");
-                        $("#alert strong").html("Error!");
-                        $("#alert i").html(result.message);
-                        $("#alert").show();
-                        setTimeout(function() {
-                            $("#alert").hide();
-                        }, 5000);
+                        UpdateMessage(result.message, 'error');
                     }
                 }
             });
         } else {
-            $("#alert").removeClass("alert-success").addClass("alert-danger");
-            $("#alert strong").html("Error!");
-            $("#alert i").html(errMessage);
-            $("#alert").show();
-            setTimeout(function() {
-                $("#alert").hide();
-            }, 5000);
+            UpdateMessage(errMessage, 'error');
         }
     });
 </script>

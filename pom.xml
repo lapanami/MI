@@ -6,7 +6,7 @@
 	<groupId>vn.home</groupId>
 	<artifactId>framework</artifactId>
 	<version>0.0.1</version>
-	<packaging>war</packaging>
+	<packaging>jar</packaging>
 
 	<name>framework</name>
 	<description>Demo project for Spring framework</description>
