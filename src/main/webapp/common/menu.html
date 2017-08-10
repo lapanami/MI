@@ -1,25 +1,7 @@
 <div class="jqueryslidemenu ui-helper-clearfix" id="myslidemenu">
     <ul>
         <#if theMenu??>
-            <#if theMenu['tree']??>
-                <#list theMenu['tree']?keys as key>
-                    <#assign tree=theMenu['tree'][key]>
-                    <li>
-                    <a href="${theMenu['map'][key].pageName}" title="${theMenu['map'][key].pageTitle}">${theMenu['map'][key].pageTitle}</a>
-                    <#list tree as key1>
-                        <#if key1?index == 0>
-                        <ul>
-                        </#if>
-                        <li>
-                        <a href="/${theMenu['map'][key1].controllerName}/${theMenu['map'][key1].pageName}" title="${theMenu['map'][key1].pageTitle}">${theMenu['map'][key1].pageTitle}</a>
-                        </li>
-                        <#if key1?index == tree?size - 1>
-                        </ul>
-                        </#if>
-                    </#list>
-                    </li>
-                </#list>
-            </#if>
+            ${theMenu}
         </#if>
     </ul>
     <div class="clr">

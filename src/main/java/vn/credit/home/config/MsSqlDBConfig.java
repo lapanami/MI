@@ -13,6 +13,7 @@ import javax.persistence.EntityManagerFactory;
 import javax.sql.DataSource;
 
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.jdbc.DataSourceBuilder;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.boot.orm.jpa.EntityManagerFactoryBuilder;
@@ -35,6 +36,8 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 @EnableTransactionManagement
 @EnableJpaRepositories(entityManagerFactoryRef = "mssqlEntityManager", transactionManagerRef = "mssqlTransactionManager", basePackages = "vn.credit.home.dao.mssql")
 public class MsSqlDBConfig {
+	@Value("${spring.jpa.properties.hibernate.mssql.dialect}")
+	private String dialect;
 
 	@Bean(name = "mssqlDataSource")
 	@ConfigurationProperties(prefix = "spring.datasource.mssql")
@@ -44,7 +47,8 @@ public class MsSqlDBConfig {
 
 	@Bean(name = "mssqlEntityManager")
 	public LocalContainerEntityManagerFactoryBean mssqlEntityManagerFactory(EntityManagerFactoryBuilder builder) {
-		return builder.dataSource(mssqlDataSource()).properties(hibernateProperties()).packages("vn.credit.home.entity.mssql").build();
+		return builder.dataSource(mssqlDataSource()).properties(hibernateProperties())
+				.packages("vn.credit.home.entity.mssql").build();
 	}
 
 	@Bean(name = "mssqlTransactionManager")
@@ -59,7 +63,7 @@ public class MsSqlDBConfig {
 
 		try {
 			Properties properties = PropertiesLoaderUtils.loadProperties(resource);
-
+			properties.setProperty("hibernate.dialect", dialect);
 			return properties.entrySet().stream()
 					.collect(Collectors.toMap(e -> e.getKey().toString(), e -> e.getValue()));
 		} catch (IOException e) {

@@ -7,7 +7,7 @@
 //Update: April 12th, 10: Fixed compat issue with jquery 1.4x
 
 //Specify full URL to down and right arrow images (23 is padding-right to add to top level LIs with drop downs):
-var arrowimages={down:['downarrowclass', 'images/arrow-down.png', 23], right:['rightarrowclass', 'images/arrow-right.png']}
+var arrowimages={down:['downarrowclass', 'static/images/arrow-down.png', 23], right:['rightarrowclass', 'static/images/arrow-right.png']}
 
 var jqueryslidemenu={
 

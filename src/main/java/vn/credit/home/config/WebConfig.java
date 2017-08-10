@@ -1,10 +1,11 @@
 /**
  * @author loc.mh
  */
-package vn.credit.home;
+package vn.credit.home.config;
 
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.converter.HttpMessageConverter;
@@ -23,15 +24,13 @@ import vn.credit.home.config.interceptor.SecurityInterceptor;
  */
 @Configuration
 public class WebConfig extends WebMvcConfigurerAdapter {
-	@Bean
-	SecurityInterceptor securityInterceptor() {
-		return new SecurityInterceptor();
-	}
+	@Autowired
+	SecurityInterceptor securityInterceptor;
 
 	@Override
 	public void addInterceptors(InterceptorRegistry registry) {
-		System.out.println("Adding interceptors ==================================");
-		registry.addInterceptor(securityInterceptor()).addPathPatterns("/**");
+		registry.addInterceptor(securityInterceptor).addPathPatterns("/**").excludePathPatterns("/", "/images/**",
+				"/static/**", "/error", "/logout");
 		super.addInterceptors(registry);
 	}
 
@@ -47,6 +46,5 @@ public class WebConfig extends WebMvcConfigurerAdapter {
 	@Override
 	public void configureMessageConverters(List<HttpMessageConverter<?>> converters) {
 		converters.add(customJackson2HttpMessageConverter());
-		// super.addDefaultHttpMessageConverters(converters);
 	}
 }

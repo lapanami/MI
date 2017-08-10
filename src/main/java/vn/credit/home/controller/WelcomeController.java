@@ -13,12 +13,12 @@ import org.codehaus.jackson.map.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.ldap.userdetails.LdapUserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import vn.credit.home.config.ext.ExtLdapUserDetails;
 import vn.credit.home.entity.oracle.SecUser;
 import vn.credit.home.service.IUserService;
 
@@ -41,14 +41,14 @@ public class WelcomeController {
 	public String login(Model model, HttpSession session) {
 		model.addAttribute("contextPath", servletContext.getContextPath());
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-		LdapUserDetails ldapUser = (LdapUserDetails) auth.getPrincipal();
+		ExtLdapUserDetails extLdapUser = (ExtLdapUserDetails) auth.getPrincipal();
 		List<SecUser> listUser = userService.listAllUser();
 		List<vn.credit.home.entity.mssql.SecUser> listMSUser = userService.listAllMSUser();
 		model.addAttribute("title", "Welcome to Home Credit Viet Nam");
-		model.addAttribute("user", ldapUser);
+		model.addAttribute("user", extLdapUser);
 		model.addAttribute("listUser", listUser);
 		model.addAttribute("listMSUser", listMSUser);
-		model.addAttribute("theMenu", userService.mapUserMenu(auth.getName()));
+		model.addAttribute("theMenu", extLdapUser.getTheMenu());
 		ObjectMapper om = new ObjectMapper();
 		try {
 			model.addAttribute("jsonListUser", om.writeValueAsString(listUser));

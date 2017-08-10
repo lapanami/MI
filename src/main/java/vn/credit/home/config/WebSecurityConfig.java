@@ -2,6 +2,7 @@ package vn.credit.home.config;
 
 import java.util.Arrays;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -13,8 +14,11 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.ldap.authentication.ad.ActiveDirectoryLdapAuthenticationProvider;
+import org.springframework.security.web.csrf.CookieCsrfTokenRepository;
 import org.springframework.security.web.csrf.CsrfFilter;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
+
+import vn.credit.home.config.ext.MyUserDetailsContextMapper;
 
 @Configuration
 @EnableWebSecurity
@@ -29,16 +33,19 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	@Value("${server.port}")
 	private int httpPort;
 
+	@Autowired
+	MyUserDetailsContextMapper myUserDetailsContextMapper;
+
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
 		http.addFilterAfter(new CSRFTokenGeneratorFilter(), CsrfFilter.class);
-		http.authorizeRequests().antMatchers("/static/**", "/", "/logout", "/images/**").permitAll().and().formLogin()
-				.loginPage("/").defaultSuccessUrl("/welcome").failureUrl("/?error=errorLoginFail");
-		http.authorizeRequests().anyRequest().access("isAuthenticated()");
+		http.authorizeRequests().antMatchers("/static/**", "/", "/logout", "/images/**", "/error").permitAll()
+				.anyRequest().access("isAuthenticated()").and().formLogin().loginPage("/").defaultSuccessUrl("/welcome")
+				.failureUrl("/?error=errorLoginFail");
 		http.exceptionHandling().accessDeniedPage("/?error=errorAccessDenied").and().logout()
 				.logoutRequestMatcher(new AntPathRequestMatcher("/logout")).logoutSuccessUrl("/")
 				.invalidateHttpSession(true);
-		http.csrf().ignoringAntMatchers("/*");
+		http.csrf().ignoringAntMatchers("/*").csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse());
 	}
 
 	@Override
@@ -58,6 +65,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 		ActiveDirectoryLdapAuthenticationProvider provider = new ActiveDirectoryLdapAuthenticationProvider(DOMAIN, URL);
 		provider.setConvertSubErrorCodesToExceptions(true);
 		provider.setUseAuthenticationRequestCredentials(true);
+		provider.setUserDetailsContextMapper(myUserDetailsContextMapper);
 		return provider;
 	}
 }

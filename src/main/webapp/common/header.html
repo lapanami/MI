@@ -2,7 +2,8 @@
 <#setting classic_compatible=true> 
 <html>
 	<head>
-		<meta charset="UTF-8">
+		<meta charset="UTF-8"><meta name="_csrf" th:content="${_csrf.token}"/>
+		<meta name="_csrf_header" th:content="${_csrf.headerName}"/>
 		<title>${title}</title>
 		<link type="text/css" href="${contextPath}/static/css/dataTables.bootstrap.css" rel="stylesheet">
         <link type="text/css" href="${contextPath}/static/css/bootstrap.css" rel="stylesheet">
@@ -14,7 +15,7 @@
 		<script src="${contextPath}/static/js/jqueryslidemenu.js"></script>
 		<script src="${contextPath}/static/js/popupWindows.js"></script>
 	    
-	    <link href="${contextPath}/images/favicon.ico " type="image/x-icon" rel="icon" />
-		<link href="${contextPath}/images/favicon.ico " type="image/x-icon" rel="shortcut icon" />
+	    <link href="${contextPath}/static/images/favicon.ico " type="image/x-icon" rel="icon" />
+		<link href="${contextPath}/static/images/favicon.ico " type="image/x-icon" rel="shortcut icon" />
 	</head>
 	<body>
