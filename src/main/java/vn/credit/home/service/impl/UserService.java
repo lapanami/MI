@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import vn.credit.home.dao.mssql.IMSUserDAO;
 import vn.credit.home.dao.oracle.IUserDAO;
+import vn.credit.home.entity.mssql.UserRole;
 import vn.credit.home.entity.oracle.SecUser;
 import vn.credit.home.service.IUserService;
 import vn.credit.home.util.param.Order;
@@ -106,8 +107,18 @@ public class UserService implements IUserService {
 	}
 
 	@Override
-	public Map<String, Object> mapUserMenu(String userName) {
-		return msuserDAO.mapUserMenu(userName, appId);
+	public String genMenuStr(String userName) {
+		return msuserDAO.genMenuStr(userName, appId);
+	}
+
+	@Override
+	public List<UserRole> getUserRole(String userName) {
+		return msuserDAO.getUserRole(userName, appId);
+	}
+
+	@Override
+	public Map<String, Object> mapUserRole(String userName) {
+		return msuserDAO.mapUserRole(userName, appId);
 	}
 
 }

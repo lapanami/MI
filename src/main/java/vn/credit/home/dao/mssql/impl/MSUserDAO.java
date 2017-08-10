@@ -8,6 +8,7 @@ import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 import javax.persistence.EntityManager;
 
@@ -32,6 +33,7 @@ import org.springframework.transaction.annotation.Transactional;
 import vn.credit.home.dao.mssql.IMSUserDAO;
 import vn.credit.home.entity.mssql.SecUser;
 import vn.credit.home.entity.mssql.UserMenu;
+import vn.credit.home.entity.mssql.UserRole;
 import vn.credit.home.util.param.Order;
 
 /**
@@ -160,34 +162,107 @@ public class MSUserDAO implements IMSUserDAO {
 	}
 
 	@Override
-	public Map<String, Object> mapUserMenu(String userName, String appId) {
+	public String genMenuStr(String userName, String appId) {
 		List<UserMenu> listMenu = getUserMenu(userName, appId);
 		if (listMenu.isEmpty()) {
+			return "";
+		}
+		Map<String, Object> treeMenu = new LinkedHashMap<>();
+		Map<String, Object> mapTreeMenu = new LinkedHashMap<>();
+		Map<String, UserMenu> mapMenu = new LinkedHashMap<>();
+		// init the menu list
+		List<UserMenu> theLoop = new ArrayList<>();
+		List<Object> theTmpLoop = new ArrayList<>();
+		listMenu.stream().forEach((menu) -> {
+			mapMenu.put(menu.getPageId(), menu);
+			if (blankId.equalsIgnoreCase(menu.getPageParentId())) {
+				theLoop.add(menu);
+				theTmpLoop.add(menu.getPageId());
+				treeMenu.put(menu.getPageId(), new ArrayList<Object>());
+				mapTreeMenu.put(menu.getPageId(), treeMenu.get(menu.getPageId()));
+			}
+		});
+		while (!theLoop.isEmpty()) {
+			UserMenu menu = theLoop.remove(0);
+			List<Object> tmpList = (List<Object>) mapTreeMenu.get(menu.getPageId());
+			List<UserMenu> listTmpMenu = listMenu.stream()
+					.filter(subMenu -> subMenu.getPageParentId().equals(menu.getPageId())).collect(Collectors.toList());
+			listTmpMenu.stream().forEach(subMenu -> {
+				Map<String, Object> tmpMap = new LinkedHashMap<>();
+				tmpMap.put(subMenu.getPageId(), new ArrayList<Object>());
+				mapTreeMenu.put(subMenu.getPageId(), tmpMap.get(subMenu.getPageId()));
+				tmpList.add(tmpMap);
+				theLoop.add(subMenu);
+			});
+		}
+		return genMenuStr(null, theTmpLoop, mapMenu, mapTreeMenu);
+	}
+
+	private String genMenuStr(UserMenu menu, List<Object> listMenu, Map<String, UserMenu> mapMenu,
+			Map<String, Object> mapTreeMenu) {
+		StringBuilder menuBuilder = new StringBuilder();
+		if (menu != null) {
+			if (listMenu.isEmpty()) {
+				menuBuilder.append("<li><a href='/" + menu.getControllerName() + "/" + menu.getPageName() + "' title='"
+						+ menu.getPageTitle() + "'>" + menu.getPageTitle() + "</a></li>");
+			} else {
+				menuBuilder.append("<li><a href='/" + menu.getControllerName() + "/" + menu.getPageName() + "' title='"
+						+ menu.getPageTitle() + "'>" + menu.getPageTitle() + "</a><ul>");
+				listMenu.stream().forEach(tMenu -> {
+					Map<String, Object> tMapTreeMenu = (Map<String, Object>) tMenu;
+					tMapTreeMenu.entrySet().forEach(entry -> {
+						List<Object> subList = (List<Object>) entry.getValue();
+						menuBuilder.append(genMenuStr(mapMenu.get(entry.getKey()), subList, mapMenu, mapTreeMenu));
+					});
+				});
+				menuBuilder.append("</ul></li>");
+			}
+		} else {
+			listMenu.stream().forEach(tmpMenu -> {
+				List<Object> listTmp = (List<Object>) mapTreeMenu.get(tmpMenu);
+				menuBuilder.append(genMenuStr(mapMenu.get(tmpMenu), listTmp, mapMenu, mapTreeMenu));
+			});
+		}
+		return menuBuilder.toString();
+	}
+
+	@Override
+	public List<UserRole> getUserRole(String userName, String appId) {
+		Session session = getsession(entityManager);
+		ProcedureCall proc = session.getNamedProcedureCall("getUserRole");
+		proc.getRegisteredParameters().stream().forEach((param) -> {
+			if ("I_APPLICATION_ID".equalsIgnoreCase(param.getName())) {
+				param.bindValue(appId);
+			} else if ("I_USERNAME".equalsIgnoreCase(param.getName())) {
+				param.bindValue(userName);
+			}
+		});
+		Output output = proc.getOutputs().getCurrent();
+		if (output.isResultSet()) {
+			return ((ResultSetOutput) output).getResultList();
+		}
+		return new ArrayList<>();
+	}
+
+	@Override
+	public Map<String, Object> mapUserRole(String userName, String appId) {
+		List<UserRole> listUserRole = getUserRole(userName, appId);
+		if (listUserRole.isEmpty()) {
 			return new LinkedHashMap<>();
 		}
 		Map<String, Object> result = new LinkedHashMap<>();
-		Map<String, List<String>> treeMenu = new LinkedHashMap<>();
-		Map<String, UserMenu> mapMenu = new LinkedHashMap<>();
-		listMenu.stream().forEach((menu) -> {
-			mapMenu.put(menu.getPageId(), menu);
-			if (!blankId.equalsIgnoreCase(menu.getPageParentId())) {
-				Object object = treeMenu.get(menu.getPageParentId());
-				List<String> listSub;
-				if (object == null) {
-					listSub = new ArrayList<>();
-				} else {
-					listSub = (List<String>) object;
-				}
-				listSub.add(menu.getPageId());
-				treeMenu.put(menu.getPageParentId(), listSub);
+		listUserRole.stream().forEach((userRole) -> {
+			List<String> listPage;
+			if (result.containsKey(userRole.getControllerName())) {
+				listPage = (List<String>) result.get(userRole.getControllerName());
 			} else {
-				if (!treeMenu.containsKey(menu.getPageId())) {
-					treeMenu.put(menu.getPageId(), new ArrayList<>());
-				}
+				listPage = new ArrayList<>();
 			}
+			if (!listPage.contains(userRole.getPageName())) {
+				listPage.add(userRole.getPageName());
+			}
+			result.put(userRole.getControllerName(), listPage);
 		});
-		result.put("map", mapMenu);
-		result.put("tree", treeMenu);
 		return result;
 	}
 

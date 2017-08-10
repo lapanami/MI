@@ -13,6 +13,7 @@ import javax.persistence.EntityManagerFactory;
 import javax.sql.DataSource;
 
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.jdbc.DataSourceBuilder;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.boot.orm.jpa.EntityManagerFactoryBuilder;
@@ -36,6 +37,9 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 @EnableTransactionManagement
 @EnableJpaRepositories(entityManagerFactoryRef = "oracleEntityManager", transactionManagerRef = "oracleTransactionManager", basePackages = "vn.credit.home.dao.oracle")
 public class OracleDBConfig {
+	@Value("${spring.jpa.properties.hibernate.oracle.dialect}")
+	private String dialect;
+
 	@Primary
 	@Bean
 	@ConfigurationProperties(prefix = "spring.datasource.oracle")
@@ -63,7 +67,7 @@ public class OracleDBConfig {
 
 		try {
 			Properties properties = PropertiesLoaderUtils.loadProperties(resource);
-
+			properties.setProperty("hibernate.dialect", dialect);
 			return properties.entrySet().stream()
 					.collect(Collectors.toMap(e -> e.getKey().toString(), e -> e.getValue()));
 		} catch (IOException e) {

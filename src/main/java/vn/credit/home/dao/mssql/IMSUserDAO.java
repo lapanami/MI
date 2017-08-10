@@ -8,6 +8,7 @@ import java.util.Map;
 
 import vn.credit.home.entity.mssql.SecUser;
 import vn.credit.home.entity.mssql.UserMenu;
+import vn.credit.home.entity.mssql.UserRole;
 import vn.credit.home.util.param.Order;
 
 /**
@@ -23,7 +24,7 @@ public interface IMSUserDAO {
 
 	List<UserMenu> getUserMenu(String userName, String appId);
 
-	Map<String, Object> mapUserMenu(String userName, String appId);
+	String genMenuStr(String userName, String appId);
 
 	long countUser();
 
@@ -32,5 +33,9 @@ public interface IMSUserDAO {
 	Map<String, Object> searchUser(int start, int length, String searchKey, List<Order> orders);
 
 	void putUser(SecUser user);
+
+	List<UserRole> getUserRole(String userName, String appId);
+
+	Map<String, Object> mapUserRole(String userName, String appId);
 
 }
