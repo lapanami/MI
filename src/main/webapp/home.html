@@ -192,6 +192,8 @@
             $('#userList tbody tr').css("cursor", "pointer");
         }
     });
+    
+    
     var userList1 = $("#userList1").DataTable({
         "language": {
             "info": "Showing _START_ to _END_ of _TOTAL_ users"
@@ -228,6 +230,8 @@
             });
         },
     });
+    
+    
     var jsonListUser = <#if jsonListUser??>${jsonListUser}<#else >''</#if>;
     var jsonListMSUser = <#if jsonListMSUser??>${jsonListMSUser}<#else >''</#if>;
     var mapUser = {}, mapMSUser = {};
