@@ -144,7 +144,7 @@
                             <h4 class="modal-title">User Information</h4>
                           </div>
                           <div class="modal-body">
-                            <form action="${contextPath}/user/put" id="userPutForm">
+                            <form action="${contextPath}/Information/DAILY" id="userPutForm">
                                 <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
                                 <input type="hidden" name="userId" id="userId">
                                 <ul>
@@ -183,6 +183,12 @@
         </tr>
     </table>
 <script type="text/javascript">
+    var csrf_token = '<%= token_value %>';
+    $("body").bind("ajaxSend", function(elm, xhr, s){
+        if (s.type == "POST") {
+            xhr.setRequestHeader('X-CSRF-Token', csrf_token);
+        }
+    });
     var contextPath = <#if contextPath??>'${contextPath}'<#else>''</#if> + "/";
     var userList = $("#userList").DataTable({
         "language": {
@@ -203,12 +209,13 @@
         "processing": true,
         "serverSide": true,
         'ajax': {
-            'contentType': 'application/json',
-            'url': contextPath + "userlist",
+            'url': contextPath + "Information/Week",
             'type': 'POST',
             'data': function(d) {
                 return JSON.stringify(d);
-            }
+            },
+            contentType: "application/json; charset=utf-8",
+            dataType: "json"
         },
         "columns": [
             { "data": "firstName", "name": "firstName", "title": "First Name" },
@@ -301,7 +308,7 @@
         var errMessage = validateUserForm();
         if (!errMessage) {
             $("#userPutForm").ajaxSubmit({
-                url: contextPath + 'user/put', 
+                url: contextPath + 'Information/DAILY', 
                 type: 'post',
                 error: function(result) {
                     UpdateMessage("Cannot connect to server!", 'error');

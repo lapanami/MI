@@ -55,6 +55,7 @@ public class SecurityInterceptor implements HandlerInterceptor {
 					if (listPageName.contains(arrStr[2])) {
 						return true;
 					} else {
+						// access denied
 						return false;
 					}
 				}

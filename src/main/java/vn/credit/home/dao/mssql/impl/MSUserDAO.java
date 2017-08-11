@@ -203,10 +203,10 @@ public class MSUserDAO implements IMSUserDAO {
 		StringBuilder menuBuilder = new StringBuilder();
 		if (menu != null) {
 			if (listMenu.isEmpty()) {
-				menuBuilder.append("<li><a href='/" + menu.getControllerName() + "/" + menu.getPageName() + "' title='"
+				menuBuilder.append("<li><a href='" + menu.getControllerName() + "/" + menu.getPageName() + "' title='"
 						+ menu.getPageTitle() + "'>" + menu.getPageTitle() + "</a></li>");
 			} else {
-				menuBuilder.append("<li><a href='/" + menu.getControllerName() + "/" + menu.getPageName() + "' title='"
+				menuBuilder.append("<li><a href='" + menu.getControllerName() + "/" + menu.getPageName() + "' title='"
 						+ menu.getPageTitle() + "'>" + menu.getPageTitle() + "</a><ul>");
 				listMenu.stream().forEach(tMenu -> {
 					Map<String, Object> tMapTreeMenu = (Map<String, Object>) tMenu;

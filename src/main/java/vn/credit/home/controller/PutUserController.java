@@ -23,14 +23,14 @@ import vn.credit.home.util.param.Result;
  *
  */
 @Controller
-@RequestMapping(value = "/user")
+@RequestMapping(value = "/Information")
 public class PutUserController {
 	Logger logger = Logger.getLogger(getClass());
 
 	@Autowired
 	IUserService userService;
 
-	@RequestMapping(value = "/put", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
+	@RequestMapping(value = "/DAILY", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
 	@ResponseBody
 	public Result putUser(@RequestParam String userId, @RequestParam String firstName, @RequestParam String lastName,
 			HttpSession session) {

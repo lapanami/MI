@@ -202,15 +202,15 @@ function UpdateMessage(mess, type) {
         var imgUrl = "";
         if (type == "error") {
             cssclass = "dev_notify_message_error";
-            imgUrl = contextPath + "images/alert32.png";
+            imgUrl = contextPath + "static/images/alert32.png";
         }
         else if (type == "success") {
             cssclass = "dev_notify_message_success";
-            imgUrl = contextPath + "images/success_20.gif";
+            imgUrl = contextPath + "static/images/success_20.gif";
         }
         else if (type == "inform") {
             cssclass = "dev_notify_message_inform";
-            imgUrl = contextPath + "images/info_20.gif";
+            imgUrl = contextPath + "static/images/info_20.gif";
         }
 
         $("#div_notify").show();
@@ -238,15 +238,15 @@ function UpdateMessagePop(mess, type) {
         var imgUrl = "";
         if (type == "error") {
             cssclass = "dev_notify_message_error";
-            imgUrl = contextPath + "images/alert32.png";
+            imgUrl = contextPath + "static/images/alert32.png";
         }
         else if (type == "success") {
             cssclass = "dev_notify_message_success";
-            imgUrl = contextPath + "images/success_20.gif";
+            imgUrl = contextPath + "static/images/success_20.gif";
         }
         else if (type == "inform") {
             cssclass = "dev_notify_message_inform";
-            imgUrl = contextPath + "images/info_20.gif";
+            imgUrl = contextPath + "static/images/info_20.gif";
         }
 
         $("#div_notify_pop").show();

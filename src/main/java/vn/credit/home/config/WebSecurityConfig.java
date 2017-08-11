@@ -38,14 +38,14 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
-		http.addFilterAfter(new CSRFTokenGeneratorFilter(), CsrfFilter.class);
-		http.authorizeRequests().antMatchers("/static/**", "/", "/logout", "/images/**", "/error").permitAll()
-				.anyRequest().access("isAuthenticated()").and().formLogin().loginPage("/").defaultSuccessUrl("/welcome")
-				.failureUrl("/?error=errorLoginFail");
-		http.exceptionHandling().accessDeniedPage("/?error=errorAccessDenied").and().logout()
+		http.addFilterAfter(new CSRFTokenGeneratorFilter(), CsrfFilter.class).authorizeRequests()
+				.antMatchers("/static/**", "/", "/logout", "/images/**", "/error").permitAll().anyRequest()
+				.authenticated().and().formLogin().loginPage("/").defaultSuccessUrl("/welcome")
+				.failureUrl("/?error=errorLoginFail").and().exceptionHandling()
+				.accessDeniedPage("/?error=errorAccessDenied").and().logout()
 				.logoutRequestMatcher(new AntPathRequestMatcher("/logout")).logoutSuccessUrl("/")
-				.invalidateHttpSession(true);
-		http.csrf().ignoringAntMatchers("/*").csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse());
+				.invalidateHttpSession(true).and().csrf().ignoringAntMatchers("/**")
+				.csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse());
 	}
 
 	@Override

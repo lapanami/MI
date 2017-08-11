@@ -11,7 +11,6 @@ import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -26,16 +25,16 @@ import vn.credit.home.util.param.DataTablesResult;
  *
  */
 @Controller
+@RequestMapping(value = "/Information")
 public class UserListController {
 	Logger logger = Logger.getLogger(getClass());
 
 	@Autowired
 	IUserService userService;
 
-	@RequestMapping(value = "/userlist", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE, produces = {
-			MediaType.APPLICATION_JSON_VALUE })
+	@RequestMapping(value = "/Week", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_UTF8_VALUE, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
 	@ResponseBody
-	public DataTablesResult search(@RequestBody DataTablesModel data, Model model, HttpSession session) {
+	public DataTablesResult search(@RequestBody DataTablesModel data, HttpSession session) {
 		DataTablesResult result = new DataTablesResult();
 		result.setDraw(data.getDraw());
 		result.setRecordsTotal(userService.countUser());
