@@ -23,7 +23,7 @@ import vn.credit.home.service.IUserService;
  *
  */
 @Controller
-@RequestMapping("/welcome")
+@RequestMapping("/Information/COUNTRY")
 public class WelcomeController extends RootController {
 	Logger logger = Logger.getLogger(getClass());
 

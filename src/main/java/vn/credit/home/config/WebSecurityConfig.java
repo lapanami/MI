@@ -40,7 +40,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	protected void configure(HttpSecurity http) throws Exception {
 		http.addFilterAfter(new CSRFTokenGeneratorFilter(), CsrfFilter.class).authorizeRequests()
 				.antMatchers("/static/**", "/", "/logout", "/images/**", "/error").permitAll().anyRequest()
-				.authenticated().and().formLogin().loginPage("/").defaultSuccessUrl("/welcome")
+				.authenticated().and().formLogin().loginPage("/").defaultSuccessUrl("/Information/COUNTRY")
 				.failureUrl("/?error=errorLoginFail").and().exceptionHandling()
 				.accessDeniedPage("/?error=errorAccessDenied").and().logout()
 				.logoutRequestMatcher(new AntPathRequestMatcher("/logout")).logoutSuccessUrl("/")

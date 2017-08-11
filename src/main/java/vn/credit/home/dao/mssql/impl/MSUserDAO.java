@@ -11,6 +11,7 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 import javax.persistence.EntityManager;
+import javax.servlet.ServletContext;
 
 import org.apache.commons.lang3.StringUtils;
 import org.hibernate.Criteria;
@@ -46,11 +47,14 @@ public class MSUserDAO implements IMSUserDAO {
 	Logger logger = LoggerFactory.getLogger(this.getClass());
 
 	@Value("${application.id.blank}")
-	String blankId;
+	String BLANK_ID;
 
 	@Autowired
 	@Qualifier("mssqlEntityManager")
 	EntityManager entityManager;
+
+	@Autowired
+	private ServletContext servletContext;
 
 	private Session getsession(EntityManager entityManager) {
 		return entityManager.unwrap(Session.class);
@@ -175,7 +179,7 @@ public class MSUserDAO implements IMSUserDAO {
 		List<Object> theTmpLoop = new ArrayList<>();
 		listMenu.stream().forEach((menu) -> {
 			mapMenu.put(menu.getPageId(), menu);
-			if (blankId.equalsIgnoreCase(menu.getPageParentId())) {
+			if (BLANK_ID.equalsIgnoreCase(menu.getPageParentId())) {
 				theLoop.add(menu);
 				theTmpLoop.add(menu.getPageId());
 				treeMenu.put(menu.getPageId(), new ArrayList<Object>());
@@ -195,24 +199,33 @@ public class MSUserDAO implements IMSUserDAO {
 				theLoop.add(subMenu);
 			});
 		}
-		return genMenuStr(null, theTmpLoop, mapMenu, mapTreeMenu);
+		String contextPath = "/".equalsIgnoreCase(servletContext.getContextPath()) ? servletContext.getContextPath()
+				: servletContext.getContextPath() + "/";
+		return genMenuStr(null, theTmpLoop, mapMenu, mapTreeMenu, contextPath);
 	}
 
 	private String genMenuStr(UserMenu menu, List<Object> listMenu, Map<String, UserMenu> mapMenu,
-			Map<String, Object> mapTreeMenu) {
+			Map<String, Object> mapTreeMenu, String contextPath) {
 		StringBuilder menuBuilder = new StringBuilder();
 		if (menu != null) {
 			if (listMenu.isEmpty()) {
-				menuBuilder.append("<li><a href='" + menu.getControllerName() + "/" + menu.getPageName() + "' title='"
-						+ menu.getPageTitle() + "'>" + menu.getPageTitle() + "</a></li>");
+				menuBuilder.append("<li><a href='" + contextPath + menu.getControllerName() + "/" + menu.getPageName()
+						+ "' title='" + menu.getPageTitle() + "'>" + menu.getPageTitle() + "</a></li>");
 			} else {
-				menuBuilder.append("<li><a href='" + menu.getControllerName() + "/" + menu.getPageName() + "' title='"
-						+ menu.getPageTitle() + "'>" + menu.getPageTitle() + "</a><ul>");
+				if (BLANK_ID.equalsIgnoreCase(menu.getPageParentId())) {
+					menuBuilder.append("<li><a href='" + contextPath + menu.getPageName() + "' title='"
+							+ menu.getPageTitle() + "'>" + menu.getPageTitle() + "</a><ul>");
+				} else {
+					menuBuilder
+							.append("<li><a href='" + contextPath + menu.getControllerName() + "/" + menu.getPageName()
+									+ "' title='" + menu.getPageTitle() + "'>" + menu.getPageTitle() + "</a><ul>");
+				}
 				listMenu.stream().forEach(tMenu -> {
 					Map<String, Object> tMapTreeMenu = (Map<String, Object>) tMenu;
 					tMapTreeMenu.entrySet().forEach(entry -> {
 						List<Object> subList = (List<Object>) entry.getValue();
-						menuBuilder.append(genMenuStr(mapMenu.get(entry.getKey()), subList, mapMenu, mapTreeMenu));
+						menuBuilder.append(
+								genMenuStr(mapMenu.get(entry.getKey()), subList, mapMenu, mapTreeMenu, contextPath));
 					});
 				});
 				menuBuilder.append("</ul></li>");
@@ -220,7 +233,7 @@ public class MSUserDAO implements IMSUserDAO {
 		} else {
 			listMenu.stream().forEach(tmpMenu -> {
 				List<Object> listTmp = (List<Object>) mapTreeMenu.get(tmpMenu);
-				menuBuilder.append(genMenuStr(mapMenu.get(tmpMenu), listTmp, mapMenu, mapTreeMenu));
+				menuBuilder.append(genMenuStr(mapMenu.get(tmpMenu), listTmp, mapMenu, mapTreeMenu, contextPath));
 			});
 		}
 		return menuBuilder.toString();
