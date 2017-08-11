@@ -4,21 +4,17 @@ import java.io.IOException;
 import java.util.List;
 
 import javax.servlet.ServletContext;
-import javax.servlet.http.HttpSession;
 
 import org.apache.log4j.Logger;
 import org.codehaus.jackson.JsonGenerationException;
 import org.codehaus.jackson.map.JsonMappingException;
 import org.codehaus.jackson.map.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-import vn.credit.home.config.ext.ExtLdapUserDetails;
 import vn.credit.home.entity.oracle.SecUser;
 import vn.credit.home.service.IUserService;
 
@@ -28,7 +24,7 @@ import vn.credit.home.service.IUserService;
  */
 @Controller
 @RequestMapping("/welcome")
-public class WelcomeController {
+public class WelcomeController extends RootController {
 	Logger logger = Logger.getLogger(getClass());
 
 	@Autowired
@@ -38,17 +34,13 @@ public class WelcomeController {
 	IUserService userService;
 
 	@RequestMapping(method = RequestMethod.GET)
-	public String login(Model model, HttpSession session) {
-		model.addAttribute("contextPath", servletContext.getContextPath());
-		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-		ExtLdapUserDetails extLdapUser = (ExtLdapUserDetails) auth.getPrincipal();
+	public String login(Model model) {
+		super.initController(model, servletContext);
 		List<SecUser> listUser = userService.listAllUser();
 		List<vn.credit.home.entity.mssql.SecUser> listMSUser = userService.listAllMSUser();
 		model.addAttribute("title", "Welcome to Home Credit Viet Nam");
-		model.addAttribute("user", extLdapUser);
 		model.addAttribute("listUser", listUser);
 		model.addAttribute("listMSUser", listMSUser);
-		model.addAttribute("theMenu", extLdapUser.getTheMenu());
 		ObjectMapper om = new ObjectMapper();
 		try {
 			model.addAttribute("jsonListUser", om.writeValueAsString(listUser));

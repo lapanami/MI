@@ -70,25 +70,6 @@
                 <a href="${contextPath}/">Home</a>
                 </div>
             </div>
-            <div id="div_notify" style="display: none;">
-                <div class="clr">
-                </div>
-                <div id="div_css_notify">
-                    <table style="width: 100%">
-                        <tr>
-                            <td style="width: 1%">
-                                <img id="img_notify" alt="" />
-                            </td>
-                            <td id="div_notify_message">
-                            </td>
-                            <td style="width: 1%" valign="top">
-                                <a onclick="closeClientMessage()">
-                                    <img src="${contextPath}/static/images/cancel_16.png" /></a>
-                            </td>
-                        </tr>
-                    </table>
-                </div>
-            </div>
             <script type="text/javascript">
                 function closeClientMessage() {
                     $("#div_notify").fadeOut("slow")
@@ -144,6 +125,25 @@
                             <h4 class="modal-title">User Information</h4>
                           </div>
                           <div class="modal-body">
+                            <div id="div_notify" style="display: none;">
+                                <div class="clr">
+                                </div>
+                                <div id="div_css_notify">
+                                    <table style="width: 100%">
+                                        <tr>
+                                            <td style="width: 1%">
+                                                <img id="img_notify" alt="" />
+                                            </td>
+                                            <td id="div_notify_message">
+                                            </td>
+                                            <td style="width: 1%" valign="top">
+                                                <a onclick="closeClientMessage()">
+                                                    <img src="${contextPath}/static/images/cancel_16.png" /></a>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </div>
+                            </div>
                             <form action="${contextPath}/Information/DAILY" id="userPutForm">
                                 <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
                                 <input type="hidden" name="userId" id="userId">
@@ -183,13 +183,6 @@
         </tr>
     </table>
 <script type="text/javascript">
-    var csrf_token = '<%= token_value %>';
-    $("body").bind("ajaxSend", function(elm, xhr, s){
-        if (s.type == "POST") {
-            xhr.setRequestHeader('X-CSRF-Token', csrf_token);
-        }
-    });
-    var contextPath = <#if contextPath??>'${contextPath}'<#else>''</#if> + "/";
     var userList = $("#userList").DataTable({
         "language": {
             "info": "Showing _START_ to _END_ of _TOTAL_ users"

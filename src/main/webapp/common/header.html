@@ -17,5 +17,14 @@
 	    
 	    <link href="${contextPath}/static/images/favicon.ico " type="image/x-icon" rel="icon" />
 		<link href="${contextPath}/static/images/favicon.ico " type="image/x-icon" rel="shortcut icon" />
+		<script type="text/javascript">
+		    var csrf_token = '<%= token_value %>';
+		    $("body").bind("ajaxSend", function(elm, xhr, s){
+		        if (s.type == "POST") {
+		            xhr.setRequestHeader('X-CSRF-Token', csrf_token);
+		        }
+		    });
+		    var contextPath = <#if contextPath??>'${contextPath}'<#else>''</#if> + "/";
+	    </script>
 	</head>
 	<body>
