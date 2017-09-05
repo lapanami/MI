@@ -20,6 +20,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import vn.credit.home.dao.oracle.IUserDAO;
 import vn.credit.home.entity.oracle.SecUser;
+import vn.credit.home.entity.oracle.User;
 import vn.credit.home.entity.oracle.UserMenu;
 
 @Transactional
@@ -80,6 +81,27 @@ public class UserDAO implements IUserDAO {
 		}
 		return new ArrayList<>();
 
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see vn.credit.home.dao.oracle.IUserDAO#listUsers(java.lang.String)
+	 */
+	@Override
+	public List<User> listUsers(String userName) {
+		Session session = getsession(entityManager);
+		ProcedureCall proc = session.getNamedProcedureCall("listUser");
+		proc.getRegisteredParameters().stream().forEach((param) -> {
+			if ("I_USERNAME".equalsIgnoreCase(param.getName())) {
+				param.bindValue(userName);
+			}
+		});
+		Output output = proc.getOutputs().getCurrent();
+		if (output.isResultSet()) {
+			return ((ResultSetOutput) output).getResultList();
+		}
+		return new ArrayList<>();
 	}
 
 }

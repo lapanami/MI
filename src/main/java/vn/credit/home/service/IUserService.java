@@ -5,6 +5,7 @@ import java.util.Map;
 
 import vn.credit.home.entity.mssql.UserRole;
 import vn.credit.home.entity.oracle.SecUser;
+import vn.credit.home.entity.oracle.User;
 import vn.credit.home.util.param.Order;
 
 public interface IUserService {
@@ -31,4 +32,6 @@ public interface IUserService {
 	List<UserRole> getUserRole(String userName);
 
 	Map<String, Object> mapUserRole(String userName);
+
+	List<User> listUsers(String userName);
 }

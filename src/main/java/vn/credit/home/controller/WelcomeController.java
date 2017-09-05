@@ -15,7 +15,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-import vn.credit.home.entity.oracle.SecUser;
+import vn.credit.home.entity.oracle.User;
 import vn.credit.home.service.IUserService;
 
 /**
@@ -36,7 +36,7 @@ public class WelcomeController extends RootController {
 	@RequestMapping(method = RequestMethod.GET)
 	public String login(Model model) {
 		super.initController(model, servletContext);
-		List<SecUser> listUser = userService.listAllUser();
+		List<User> listUser = userService.listUsers("loc.mh");
 		List<vn.credit.home.entity.mssql.SecUser> listMSUser = userService.listAllMSUser();
 		model.addAttribute("title", "Welcome to Home Credit Viet Nam");
 		model.addAttribute("listUser", listUser);

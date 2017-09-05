@@ -11,6 +11,7 @@ import vn.credit.home.dao.mssql.IMSUserDAO;
 import vn.credit.home.dao.oracle.IUserDAO;
 import vn.credit.home.entity.mssql.UserRole;
 import vn.credit.home.entity.oracle.SecUser;
+import vn.credit.home.entity.oracle.User;
 import vn.credit.home.service.IUserService;
 import vn.credit.home.util.param.Order;
 
@@ -119,6 +120,16 @@ public class UserService implements IUserService {
 	@Override
 	public Map<String, Object> mapUserRole(String userName) {
 		return msuserDAO.mapUserRole(userName, appId);
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see vn.credit.home.service.IUserService#listUsers(java.lang.String)
+	 */
+	@Override
+	public List<User> listUsers(String userName) {
+		return userDAO.listUsers(userName);
 	}
 
 }

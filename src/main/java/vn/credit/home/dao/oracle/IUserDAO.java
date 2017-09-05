@@ -3,6 +3,7 @@ package vn.credit.home.dao.oracle;
 import java.util.List;
 
 import vn.credit.home.entity.oracle.SecUser;
+import vn.credit.home.entity.oracle.User;
 import vn.credit.home.entity.oracle.UserMenu;
 
 public interface IUserDAO {
@@ -13,4 +14,6 @@ public interface IUserDAO {
 	SecUser getUserByUserId(String userId);
 
 	List<UserMenu> getUserMenu(String userName, String appId);
+
+	List<User> listUsers(String userName);
 }
