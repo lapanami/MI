@@ -169,7 +169,7 @@
                     <div id="dev_terms">
                         Designed by Home Credit Vietnam Internal Development Team.
                     </div>
-                    Copyright 2012 &copy; Home Credit Vietnam. All
+                    Copyright 2017 &copy; Home Credit Vietnam. All
                     rights reserved.
                 </div>
                 <div id="div_loading" style="display: none;">
@@ -194,6 +194,8 @@
     
     
     var userList1 = $("#userList1").DataTable({
+    	
+    	"pageLength": 50,
         "language": {
             "info": "Showing _START_ to _END_ of _TOTAL_ users"
         },
@@ -241,6 +243,7 @@
     for (var i = 0; i < jsonListMSUser.length; i++) {
         mapMSUser[jsonListMSUser[i].userId] = jsonListMSUser[i];
     }
+    
     function setUserInfo(user) {
         $("#userName").html(user.userName);
         $("#firstName").val(user.firstName);
@@ -286,6 +289,7 @@
         }
         userInfo($(this).attr("data-uid"));
     } );
+    
     $('#userList1 tbody').on( 'click', 'tr', function () {
         if ( $(this).hasClass('selected') ) {
             $(this).removeClass('selected');

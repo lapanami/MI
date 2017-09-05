@@ -26,6 +26,7 @@ public interface IMSUserDAO {
 
 	String genMenuStr(String userName, String appId);
 
+
 	long countUser();
 
 	Map<String, Object> searchUser(int start, int length, String searchKey);
