@@ -9,14 +9,8 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.stereotype.Component;
 
-import vn.credit.home.entity.oracle.SecUser;
-import vn.credit.home.service.IUserService;
-
 @Component
 public class MyAuthenticationProvider implements AuthenticationProvider {
-
-	@Autowired
-	IUserService userService;
 
 	@Override
 	public Authentication authenticate(Authentication authentication) throws AuthenticationException {
@@ -24,15 +18,9 @@ public class MyAuthenticationProvider implements AuthenticationProvider {
 		String name = authentication.getName();
 		authentication.getCredentials().toString();
 
-		SecUser user = userService.getUserByUserName(name);
-		if (user == null) {
-			return null;
-		} else {
-			UsernamePasswordAuthenticationToken auth = new UsernamePasswordAuthenticationToken(user.getUserName(),
-					user.getPassword(), new ArrayList<>());
-			auth.setDetails(user);
-			return auth;
-		}
+		UsernamePasswordAuthenticationToken auth = new UsernamePasswordAuthenticationToken(name,
+				name, new ArrayList<>());
+		return auth;
 	}
 
 	@Override

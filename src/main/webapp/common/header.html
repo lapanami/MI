@@ -1,30 +1,184 @@
 <!DOCTYPE html>
-<#setting classic_compatible=true> 
+<#setting classic_compatible=true>
 <html>
-	<head>
-		<meta charset="UTF-8"><meta name="_csrf" th:content="${_csrf.token}"/>
-		<meta name="_csrf_header" th:content="${_csrf.headerName}"/>
-		<title>${title}</title>
-		<link type="text/css" href="${contextPath}/static/css/dataTables.bootstrap.css" rel="stylesheet">
-        <link type="text/css" href="${contextPath}/static/css/bootstrap.css" rel="stylesheet">
-    	<link type="text/css" href="${contextPath}/static/css/login.css" rel="stylesheet"/>
+<head>
+<meta charset="UTF-8">
+<meta name="_csrf" th:content="${_csrf.token}" />
+<meta name="_csrf_header" th:content="${_csrf.headerName}" />
+<title>${title}</title>
+<link type="text/css"
+	href="${contextPath}/static/css/dataTables.bootstrap.css"
+	rel="stylesheet">
+<link type="text/css" href="${contextPath}/static/css/bootstrap.css"
+	rel="stylesheet">
+<link type="text/css" href="${contextPath}/static/css/login.css"
+	rel="stylesheet" />
+	
+<link type="text/css"
+	href="${contextPath}/static/css/common/devICMS.css" rel="stylesheet" />
 
-		<script src="${contextPath}/static/js/jquery-3.2.1.min.js"></script>
-		<script src="${contextPath}/static/js/jquery.form.js"></script>
-		<script src="${contextPath}/static/js/bootstrap.min.js"></script>
-		<script src="${contextPath}/static/js/popupWindows.js"></script>
-	    
-	    <link href="${contextPath}/static/images/favicon.ico " type="image/x-icon" rel="icon" />
-		<link href="${contextPath}/static/images/favicon.ico " type="image/x-icon" rel="shortcut icon" />
-		<script type="text/javascript">
-		    var csrf_token = '<%= token_value %>';
-		    $("body").bind("ajaxSend", function(elm, xhr, s){
-		        if (s.type == "POST") {
-		            xhr.setRequestHeader('X-CSRF-Token', csrf_token);
-		        }
-		    });
-		    var contextPath = <#if contextPath??>'${contextPath}'<#else>''</#if> + "/";
-	    </script>
-		<script src="${contextPath}/static/js/jqueryslidemenu.js"></script>
-	</head>
-	<body>
+
+
+<link rel="stylesheet"
+	href="//cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.3.0/css/datepicker.min.css" />
+<link rel="stylesheet"
+	href="//cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.3.0/css/datepicker3.min.css" />
+<script src="${contextPath}/static/js/jquery-3.2.1.min.js"></script>
+<script src="${contextPath}/static/js/jquery.form.js"></script>
+<script src="${contextPath}/static/js/bootstrap.min.js"></script>
+<script src="${contextPath}/static/js/popupWindows.js"></script>
+<script src="${contextPath}/static/js/formden.js"></script>
+<script type="text/javascript">
+    var csrf_token = '<%= token_value %>';
+    $("body").bind("ajaxSend", function(elm, xhr, s){
+        if (s.type == "POST") {
+            xhr.setRequestHeader('X-CSRF-Token', csrf_token);
+        }
+    });
+    var contextPath = <#if contextPath??>'${contextPath}'<#else>''</#if> + "/";
+ </script>
+<script src="${contextPath}/static/js/jqueryslidemenu.js"></script>
+<script
+	src="//cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.3.0/js/bootstrap-datepicker.min.js"></script>
+<link href="${contextPath}/static/images/favicon.ico " type="image/x-icon" rel="icon" />
+<link href="${contextPath}/static/images/favicon.ico " type="image/x-icon" rel="shortcut icon" />
+
+<style type="text/css">
+/**
+ * Override feedback icon position
+ * See http://formvalidation.io/examples/adjusting-feedback-icon-position/
+ */
+#eventForm .form-control-feedback {
+	top: 0;
+	right: -15px;
+}
+
+/* Adjust feedback icon position */
+#productForm .selectContainer .form-control-feedback, #productForm .inputGroupContainer .form-control-feedback
+	{
+	right: -15px;
+}
+</style>
+
+</head>
+<body >
+<#if user??>
+	<style type="text/css" rel="stylesheet">
+        .modal-body ul li label
+        {
+            width: 90px;
+        }
+        .modal-body ul {
+            list-style-type: none;
+        }
+        .modal-body li {
+            margin-bottom: 5px;
+        }
+    </style>
+    <table style="width: 100%" cellpadding="0" cellspacing="0" class="dev_page_border">
+        <tr>
+            <td style="width: 10px">
+            </td>
+            <td style="width: 99%">
+            <table cellpadding="0" cellspacing="0" class="dev_company_title">
+                <tr>        
+                    <td style="width: 100px" valign="bottom">
+                        <a href="${contextPath}/">
+                            <img src="${contextPath}/static/images/Internal-logo.png" alt="Logo Home Credit VN" /></a>
+                    </td>
+                    <td class="dev_top_center">
+                        ${title}
+                    </td>
+                    <td class="dev_top_right_td">
+                        <div class="dev_top_right_area">
+                                <table cellpadding="0" cellspacing="0">
+                                    <tr>
+                                        <td>
+                                           
+                                        </td>
+                                        <td>
+                                            
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                                <p style="color: white;">
+                                                    HELLO
+            [<a href="${contextPath}/logout">Logout</a>]                                    </p>
+                                        </td>
+                                        <td>
+                                            <img src="${contextPath}/static/images/user.png" alt="User Profile" />
+                                        </td>
+                                    </tr>
+                                     <tr>
+                                        <td>
+                                            <select id="locales" hidden>
+                                                <option value="en" <#if (lang!"en") == "en">selected="selected"</#if>>English</option>
+                                                <option value="vn" <#if (lang!"en") == "vn">selected="selected"</#if>>Tiếng Việt</option>
+                                            </select>
+                                        </td>
+                                    </tr>
+                                </table>
+                        </div>
+                    </td>        
+                </tr>
+            </table>
+            <div id="header-separator">
+            </div>
+            <div class="clr">
+            </div>
+	<#else>
+		<table style="width: 100%" cellpadding="0" cellspacing="0" class="dev_page_border">
+        <tr>
+            <td style="width: 10px">
+            </td>
+            <td style="width: 99%">
+                <table cellpadding="0" cellspacing="0" class="dev_company_title">
+                    <tr>
+                        <td valign="bottom" class="dev_company_logo">
+                        </td>
+                        <td class="dev_top_center">
+                            APPLICATION TITLE
+                            <div class="dev_comany_version">
+                                Version 1.0</div>
+                        </td>
+                        <td class="dev_top_right_td">
+                            <div class="dev_top_right_area">
+                                    <table cellpadding="0" cellspacing="0">
+                                        <tr>
+                                            <td>
+                                               
+                                            </td>
+                                            <td>
+                                                
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                    <p>
+                                                        [ <a href="/ReportCenter">Login</a>
+                                                        ]
+                                                    </p>
+                                            </td>
+                                            <td>
+                                                <img src="static/images/user.png" alt="User Profile" />
+                                            </td>
+                                        </tr>
+                                         <tr>
+                                        <td>
+                                            
+                                        </td>
+                                    </tr>
+                                    </table>
+                            </div>
+                        </td>
+                    </tr>
+                </table>
+		<div id="header-separator">
+		</div>
+		<div class="dev_breadcrumb">
+		    <div class="dev_breadcrumb_left">
+		        Login</div>
+		  
+		</div>
+	</#if>

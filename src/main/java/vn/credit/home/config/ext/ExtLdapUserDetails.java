@@ -4,11 +4,15 @@
 package vn.credit.home.config.ext;
 
 import java.util.Collection;
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.SpringSecurityCoreVersion;
 import org.springframework.security.ldap.userdetails.LdapUserDetails;
+
+import com.fasterxml.jackson.databind.ObjectMapper;
+import vn.credit.home.util.constant.LoginType;
 
 /**
  * @author loc.mh
@@ -22,7 +26,32 @@ public class ExtLdapUserDetails implements LdapUserDetails {
 
 	private String theMenu;
 
-	private Map<String, Object> rolePage;
+	private Map<String, Object> controllerPage;
+
+	private LoginType loginType = LoginType.AD;
+	
+
+	public static ExtLdapUserDetails createLDAPUserContext(String userName) {
+		// TODO: get menu, user role for each page, get userType from secuser
+		// appropriate with LDAP user. Use role to get menu and page permissions.
+		ExtLdapUserDetails extLdapUserDetails = new ExtLdapUserDetails();
+		extLdapUserDetails.setTheMenu(userName);
+		extLdapUserDetails.setLoginType(LoginType.LDAP);
+
+		return extLdapUserDetails;
+	}
+
+	public LoginType getLoginType() {
+		return loginType;
+	}
+
+	public void setLoginType(LoginType loginType) {
+		this.loginType = loginType;
+	}
+
+	public ExtLdapUserDetails() {
+
+	}
 
 	public ExtLdapUserDetails(LdapUserDetails ldapUserDetails) {
 		userDetails = ldapUserDetails;
@@ -45,11 +74,11 @@ public class ExtLdapUserDetails implements LdapUserDetails {
 	}
 
 	public Map<String, Object> getRolePage() {
-		return rolePage;
+		return controllerPage;
 	}
 
 	public void setRolePage(Map<String, Object> rolePage) {
-		this.rolePage = rolePage;
+		this.controllerPage = rolePage;
 	}
 
 	@Override
@@ -95,5 +124,15 @@ public class ExtLdapUserDetails implements LdapUserDetails {
 	@Override
 	public String getDn() {
 		return userDetails.getDn();
+	}
+	
+	@Override
+	public String toString() {
+		ObjectMapper om = new ObjectMapper();
+		try {
+			return om.writeValueAsString(this);
+		} catch (Exception e) {
+			return this.toString();
+		}
 	}
 }

@@ -1,3 +1,29 @@
-
-	</body>
+<script type="text/javascript">
+	$(document).ready(
+			function() {
+				$("#locales").change(
+						function() {
+							var selectedOption = $('#locales').val();
+							if (selectedOption != '') {
+								window.location
+										.replace(window.location.pathname
+												+ '?lang=' + selectedOption);
+							}
+						});
+			});
+	function closeClientMessage() {
+		$("#div_notify").fadeOut("slow")
+	}
+</script>
+<script src="${contextPath}/static/js/util.js"></script>
+<div id="dev_footer">
+	<div id="dev_terms">${.data_model["common.design"]}</div>
+	${.data_model["common.copy.right"]}
+</div>
+<div id="div_overlay"></div>
+</td>
+<td style="width: 10px"></td>
+</tr>
+</table>
+</body>
 </html>

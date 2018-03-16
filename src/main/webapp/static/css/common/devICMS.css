@@ -1,0 +1,251 @@
+@CHARSET "ISO-8859-1";
+
+.font_size_dev {
+	font-size: 12px;
+	font-family: Tahoma, sans-serif;
+}
+
+body {
+	font-size: 12px;
+	min-width:900px;
+}
+
+button {
+	font-size: 12px !important;
+}
+
+.btn_button_sava_edit_reset {
+	width: 70px;
+	font-weight: bold;
+}
+
+.btn_button_sava_edit_close {
+	width: 70px;
+	background-color: rgb(75, 75, 75) !important;
+}
+
+.btn_button_search {
+	width: 174px !important;
+}
+
+#confirmBox {
+	display: none;
+	background-color: #eee;
+	border-radius: 5px;
+	border: 1px solid #aaa;
+	position: absolute;
+	width: 300px;
+	left: 50%;
+	margin-left: -150px;
+	padding: 6px 8px 8px;
+	box-sizing: border-box;
+	text-align: center;
+	z-index: 2000;
+	top: 150px;
+}
+
+#confirmBox button {
+	/* background-color: #ccc; */
+	display: inline-block;
+	border-radius: 3px;
+	/* border: 1px solid #aaa; */
+	padding: 2px;
+	text-align: center;
+	width: 80px;
+	cursor: inherit;
+}
+
+#confirmBox button:hover {
+	background-color: #ddd;
+}
+
+#confirmBox .message {
+	text-align: left;
+	margin-bottom: 8px;
+}
+
+.modal-footer {
+	padding: 8px !important;
+}
+
+.modal-header {
+	background-color: #D70925 !important;
+	color: white;
+	padding: 15px 0px 10px 10px !important;
+	font-weight: bold;
+}
+
+.modal-title {
+	font-size: 14px !important;
+	font-weight: bold;
+}
+
+.loading-spinner {
+	position: fixed;
+	width: 100%;
+	height: 100%;
+	top: 0px;
+	z-index: 9999;
+	background-image: url("/ReportCenter_UI/images/spinner.gif");
+	background-repeat: no-repeat;
+	background-position: center;
+	background-size: 100px;
+}
+
+.sorting_1 {
+	text-align: center !important;
+}
+
+.select-checkbox {
+	
+}
+
+.modal {
+	
+}
+
+.vertical-alignment-helper {
+	display: table;
+	height: 100%;
+	width: 100%;
+}
+
+.vertical-align-center {
+	/* To center vertically */
+	display: table-cell;
+	vertical-align: middle;
+}
+
+.modal-content {
+	/* Bootstrap sets the size of the modal in the modal-dialog class, we need to inherit it */
+	width: inherit;
+	height: inherit;
+	/* To center horizontally */
+	margin: 0 auto;
+}
+
+.btn-danger {
+	background-color: #D70925 !important;
+	/* border-color: rgb(200, 16, 46) !important; */
+	width: 86px;
+	font-weight: bold;
+}
+
+.btn-danger btn-close {
+	background-color: rgb(75, 75, 75) !important;
+	border-color: white !important;
+	color: white !important;
+	width: 80px;
+}
+
+.btn-danger:hover {
+	border-color: #ac2925;
+}
+
+#btnExportToExcel .btn-danger {
+	width: 60px;
+}
+
+.pagination>.active>a, .pagination>.active>span, .pagination>.active>a:hover,
+	.pagination>.active>span:hover, .pagination>.active>a:focus,
+	.pagination>.active>span:focus {
+	background-color: #D70925 !important;
+	border-color: #D70925 !important;
+}
+
+.panel-body {
+	padding: 5px !important;
+}
+
+table.dataTable tbody th, table.dataTable tbody td {
+	padding: 3px 0px !important;
+}
+
+/* #listAllStock tbody th, table.dataTable tbody td {
+	padding: 6px 0px !important;
+}
+ */
+#listAllStock_wrapper {
+	padding-left: 5px;
+	padding-right: 5px;
+}
+
+#listAllOrder_wrapper {
+	padding-left: 5px;
+	padding-right: 5px;
+}
+
+#listAllCard_wrapper {
+	padding-left: 5px;
+	padding-right: 5px;
+}
+
+#listAllCardTransferring_wrapper {
+	padding-left: 5px;
+	padding-right: 5px;
+}
+
+.btn_custom {
+	display: inline-block;
+	padding: 4px 12px;
+	margin-bottom: 0;
+	font-size: 14px;
+	font-weight: 400;
+	line-height: 1.42857143;
+	text-align: center;
+	white-space: nowrap;
+	vertical-align: middle;
+	-ms-touch-action: manipulation;
+	touch-action: manipulation;
+	cursor: pointer;
+	-webkit-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	user-select: none;
+	background-image: none;
+	border: 1px solid transparent;
+	border-radius: 4px;
+	font-weight: bold;
+	width: 80px !important;
+	background-color: #4b4b4b !important;
+	color: white !important;
+}
+
+.btn {
+	display: inline-block;
+	padding: 4px 12px !important;
+	margin-bottom: 0;
+	font-size: 14px;
+	font-weight: 400;
+	line-height: 1.42857143;
+	text-align: center;
+	white-space: nowrap;
+	vertical-align: middle;
+	-ms-touch-action: manipulation;
+	touch-action: manipulation;
+	cursor: pointer;
+	-webkit-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	user-select: none;
+	background-image: none;
+	border: 1px solid transparent;
+	border-radius: 4px
+}
+
+.close {
+	font-size: 21px !important;
+	padding-right: 13px !important;
+}
+
+.footer_custom {
+	float: right;
+	padding-right: 12px;
+	padding-top: 4px;
+	padding-bottom: 4px;
+}
+
+.table>thead>tr>th, .table>tbody>tr>th, .table>tfoot>tr>th, .table>thead>tr>td,
+	.table>tbody>tr>td, .table>tfoot>tr>td {
+	vertical-align: inherit;
+}

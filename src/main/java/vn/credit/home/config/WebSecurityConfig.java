@@ -36,11 +36,14 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	@Autowired
 	MyUserDetailsContextMapper myUserDetailsContextMapper;
 
+	@Autowired
+	OpenAuthenticationProvider openAuthenticationProvider;
+
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
 		http.addFilterAfter(new CSRFTokenGeneratorFilter(), CsrfFilter.class).authorizeRequests()
-				.antMatchers("/static/**", "/", "/logout", "/images/**", "/error").permitAll().anyRequest()
-				.authenticated().and().formLogin().loginPage("/").defaultSuccessUrl("/Information/COUNTRY")
+				.antMatchers("/static/**", "/", "/logout", "/images/**", "/error","/4**", "/5**").permitAll().anyRequest()
+				.authenticated().and().formLogin().loginPage("/").defaultSuccessUrl("/Welcome")
 				.failureUrl("/?error=errorLoginFail").and().exceptionHandling()
 				.accessDeniedPage("/?error=errorAccessDenied").and().logout()
 				.logoutRequestMatcher(new AntPathRequestMatcher("/logout")).logoutSuccessUrl("/")
@@ -50,18 +53,20 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
 	@Override
 	protected void configure(AuthenticationManagerBuilder authManagerBuilder) throws Exception {
-		authManagerBuilder.authenticationProvider(activeDirectoryLdapAuthenticationProvider())
+		authManagerBuilder.authenticationProvider(activeDirectoryAuthenticationProvider())
 				.userDetailsService(userDetailsService());
+		authManagerBuilder.authenticationProvider(openAuthenticationProvider);
+
 	}
 
 	@Override
 	@Bean
 	public AuthenticationManager authenticationManager() {
-		return new ProviderManager(Arrays.asList(activeDirectoryLdapAuthenticationProvider()));
+		return new ProviderManager(Arrays.asList(activeDirectoryAuthenticationProvider(), openAuthenticationProvider));
 	}
 
 	@Bean
-	public AuthenticationProvider activeDirectoryLdapAuthenticationProvider() {
+	public AuthenticationProvider activeDirectoryAuthenticationProvider() {
 		ActiveDirectoryLdapAuthenticationProvider provider = new ActiveDirectoryLdapAuthenticationProvider(DOMAIN, URL);
 		provider.setConvertSubErrorCodesToExceptions(true);
 		provider.setUseAuthenticationRequestCredentials(true);

@@ -1,0 +1,147 @@
+<#include "/common/header.html">
+<style type="text/css" rel="stylesheet">
+.modal-body ul li label {
+	width: 90px;
+}
+
+.modal-body ul {
+	list-style-type: none;
+}
+
+.modal-body li {
+	margin-bottom: 5px;
+}
+</style>
+<script src="${contextPath}/static/js/jquery.dataTables.min.js"></script>
+<script src="${contextPath}/static/js/dataTables.bootstrap.min.js"></script>
+<table style="width: 100%" cellpadding="0" cellspacing="0"
+	class="dev_page_border">
+	<tr>
+		<td style="width: 10px"></td>
+		<td style="width: 99%">
+			<table cellpadding="2" cellspacing="2" class="dev_company_title">
+				<tr>
+					<td style="width: 100px" valign="bottom"><a
+						href="${contextPath}/"> <img
+							src="${contextPath}/images/logo-home-credit-group.gif" alt="" /></a>
+					</td>
+					<td class="dev_top_center">Report Center
+						<div class="dev_comany_version">Version 1.0</div>
+					</td>
+					<td style="width: 300px">
+						<div class="dev_top_right_area">
+							<table cellpadding="0" cellspacing="0">
+								<tr>
+									<td><a class="dev_color_link" href="/Help">Help</a></td>
+									<td><a class="dev_color_link" href="/Help"> <img
+											src="${contextPath}/images/help_20.png" alt="Help" />
+									</a></td>
+								</tr>
+								<tr>
+									<td>
+										<p>
+											HELLO ${user.username?upper_case} [<a
+												href="${contextPath}/logout">Log Out</a>]
+										</p>
+									</td>
+									<td><img src="${contextPath}/images/user.png"
+										alt="User Profile" /></td>
+								</tr>
+							</table>
+						</div>
+					</td>
+				</tr>
+			</table>
+			<div id="header-separator"></div>
+			<div class="clr"></div> <#include "/common/menu.html">
+			<div class="dev_breadcrumb">
+				<div class="dev_breadcrumb_left">
+					<a href="${contextPath}/">Home</a>
+				</div>
+				<div class="dev_breadcrumb_right">
+
+					<a href="${contextPath}/">Home</a>
+				</div>
+			</div>
+			<div id="div_notify" style="display: none;">
+				<div class="clr"></div>
+				<div id="div_css_notify">
+					<table style="width: 100%">
+						<tr>
+							<td style="width: 1%"><img id="img_notify" alt="" /></td>
+							<td id="div_notify_message"></td>
+							<td style="width: 1%" valign="top"><a
+								onclick="closeClientMessage()"> <img
+									src="${contextPath}/images/cancel_16.png" /></a></td>
+						</tr>
+					</table>
+				</div>
+			</div>
+			<script type="text/javascript">
+				function closeClientMessage() {
+					$("#div_notify").fadeOut("slow")
+				}
+			</script>
+			<div class="dev_body_content">
+				<b> Welcome ReportCenter</b>
+
+				<div id="div-error">
+					<div class="face">ðŸ™‰</div>
+					<div>
+						<p class="code">404</p>
+						<p class="title">Page not FOUND!</p>
+						<p class="desc">
+							Trang web báº¡n Ä‘ang tÃ¬m kiáº¿m khÃ´ng tá»“n táº¡i.<br /> <a href="/">Trá»Ÿ
+								vá»� trang chá»§</a>
+						</p>
+					</div>
+				</div>
+			</div>
+			<div id="dev_footer">
+				<div id="dev_terms">Designed by Home Credit Vietnam Internal
+					Development Team.</div>
+				Copyright 2017 &copy; Home Credit Vietnam. All rights reserved.
+			</div>
+			<div id="div_loading" style="display: none;">
+				<img src="${contextPath}/images/ajax-loader-2.gif" />
+			</div>
+			<div id="div_overlay"></div>
+		</td>
+		<td style="width: 10px"></td>
+	</tr>
+</table>
+<style type="text/css">
+#div-error {
+	
+}
+
+#div-error div {
+	display: inline-block;
+	vertical-align: middle;
+	color: dimgrey
+}
+
+#div-error p {
+	margin: 0;
+}
+
+#div-error .face {
+	font-size: 20em;
+	line-height: 1em;
+}
+
+#div-error .code {
+	font-size: 6em;
+}
+
+#div-error .title {
+	font-size: 3em;
+}
+
+#div-error .desc {
+	font-size: 1.7em;
+}
+</style>
+<script type="text/javascript">
+	
+</script> <#include "/common/footer.html">

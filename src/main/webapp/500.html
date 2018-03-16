@@ -1,0 +1,74 @@
+<#include "/common/header.html">
+		<div class="dev_breadcrumb">
+				<div class="dev_breadcrumb_left">
+					<a href="${contextPath}/">Home</a>
+				</div>
+				<div class="dev_breadcrumb_right">
+
+					<a href="${contextPath}/">Home</a>
+				</div>
+			</div>
+			<script type="text/javascript">
+				function closeClientMessage() {
+					$("#div_notify").fadeOut("slow")
+				}
+			</script>
+			<div class="dev_body_content">
+				<div id="div-error">
+					<div>
+						<div class="div-error-helper">
+							<p class="error-code">500</p><b style="font-size: 25px; margin-right: 40px;">Error</b>
+							<p class="desc">
+								${.data_model["common.error.404_6"]}
+							</p>
+						</div>
+					</div>
+				</div>
+			</div>
+<style type="text/css">
+#div-error {
+	
+}
+
+#div-error div {
+    display: inline-block;
+    vertical-align: middle;
+    text-align: center;
+    width: 100%;
+}
+
+#div-error p {
+	margin: 0;
+}
+
+#div-error .face {
+	font-size: 20em;
+	line-height: 1em;
+}
+
+#div-error .code {
+	font-size: 6em;
+}
+
+#div-error .title {
+	font-size: 3em;
+}
+
+#div-error .desc {
+	font-size: 1.7em;
+}
+</style>
+<script type="text/javascript">
+    function closeClientMessage() {
+        $("#div_notify").fadeOut("slow")
+    }
+    $('#backPage').click(function(e){
+		window.history.back();
+		e.preventDefault();
+	});    
+	$( document ).ready(function() {
+		$('#div-error .desc i').html(window.location.pathname);
+	});
+</script>
+<script src="${contextPath}/static/js/util.js"></script>
+<#include "/common/footer.html">

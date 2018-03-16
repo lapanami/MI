@@ -226,7 +226,7 @@ function UpdateMessage(mess, type) {
 		$("#server_message").html("");
 		$("#server_message").hide();
 
-		HideInPeriod("div_notify", 3000);
+		HideInPeriod("div_notify", 15000);
 	} else {
 		$("#div_notify").hide();
 		$("#div_css_notify").removeClass(cssclass);
@@ -258,11 +258,99 @@ function UpdateMessagePop(div_notify_pop, div_css_notify_pop, img_notify_pop,
 		$("#" + div_notify_message_pop).html(mess);
 
 		if (type == "success") {
-			HideInPeriod(div_notify_pop, 3000);
+			HideInPeriod(div_notify_pop, 10000);
 		} else if (type == "inform") {
-			HideInPeriod(div_notify_pop, 3000);
+			HideInPeriod(div_notify_pop, 10000);
+		} else {
+			HideInPeriod(div_notify_pop, 15000)
 		}
 
+	} else {
+		$("#" + div_notify_pop).hide();
+		$("#" + div_css_notify_pop).removeClass(cssclass);
+		$("#" + img_notify_pop).removeAttr("src");
+		$("#" + div_notify_message_pop).html("");
+	}
+}
+
+
+function UpdateMessagePopNoTime(div_notify_pop, div_css_notify_pop, img_notify_pop,
+		div_notify_message_pop, mess, type) {
+	if (mess != "") {
+		var cssclass = "";
+		var imgUrl = "";
+		if (type == "error") {
+			cssclass = "dev_notify_message_error";
+			imgUrl = contextPath + "static/images/alert32.png";
+		} else if (type == "success") {
+			cssclass = "dev_notify_message_success";
+			imgUrl = contextPath + "static/images/success_20.gif";
+		} else if (type == "inform") {
+			cssclass = "dev_notify_message_inform";
+			imgUrl = contextPath + "static/images/info_20.gif";
+		}
+
+		$("#" + div_notify_pop).show();
+		$("#" + div_css_notify_pop).removeAttr("class");
+		$("#" + div_css_notify_pop).addClass(cssclass);
+		$("#" + img_notify_pop).attr("src", imgUrl);
+		$("#" + div_notify_message_pop).html(mess);
+
+		if (type == "success") {
+			HideInPeriod(div_notify_pop, 100000);
+		} else if (type == "inform") {
+			HideInPeriod(div_notify_pop, 100000);
+		} else {
+			HideInPeriod(div_notify_pop, 100000)
+		}
+
+	} else {
+		$("#" + div_notify_pop).hide();
+		$("#" + div_css_notify_pop).removeClass(cssclass);
+		$("#" + img_notify_pop).removeAttr("src");
+		$("#" + div_notify_message_pop).html("");
+	}
+}
+
+
+
+function closePopClientMessagePOP(div_notify_pop) {
+	$("#" + div_notify_pop).fadeOut("slow")
+}	
+
+
+
+function UpdateMessagePopNoti(div_notify_pop, div_css_notify_pop, img_notify_pop,
+		div_notify_message_pop,popUp, mess, type) {
+	if (mess != "") {
+		var cssclass = "";
+		var imgUrl = "";
+		if (type == "error") {
+			cssclass = "dev_notify_message_error";
+			imgUrl = contextPath + "static/images/alert32.png";
+		} else if (type == "success") {
+			cssclass = "dev_notify_message_success";
+			imgUrl = contextPath + "static/images/success_20.gif";
+		} else if (type == "inform") {
+			cssclass = "dev_notify_message_inform";
+			imgUrl = contextPath + "static/images/info_20.gif";
+		}
+
+		$("#" + div_notify_pop).show();
+		$("#" + div_css_notify_pop).removeAttr("class");
+		$("#" + div_css_notify_pop).addClass(cssclass);
+		$("#" + img_notify_pop).attr("src", imgUrl);
+		$("#" + div_notify_message_pop).html(mess);
+
+//		if (type == "success") {
+//			HideInPeriodNoti(div_notify_pop, 4000,popUp);
+//		} else if (type == "inform") {
+//			HideInPeriodNoti(div_notify_pop, 4000,popUp);
+//		} else {
+//			HideInPeriodNoti(div_notify_pop, 4000,popUp)
+//			
+//		}
+		
 	} else {
 		$("#" + div_notify_pop).hide();
 		$("#" + div_css_notify_pop).removeClass(cssclass);
@@ -274,6 +362,14 @@ function UpdateMessagePop(div_notify_pop, div_css_notify_pop, img_notify_pop,
 function HideInPeriod(id, period) {
 	setTimeout(function() {
 		$("#" + id).fadeOut("slow")
+	}, period);
+}
+
+function HideInPeriodNoti(id, period,popUp) {
+	setTimeout(function() {
+		$("#" + id).fadeOut("slow")
+		$("#" + popUp).modal("toggle");
+		$("#" + popUp).html("");
 	}, period);
 }
 
