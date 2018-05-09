@@ -23,7 +23,7 @@ import org.springframework.context.annotation.ComponentScan;
 
 @SpringBootApplication
 @EnableAutoConfiguration
-@ComponentScan(basePackages = { "vn.credit.home.controller"/*, "vn.credit.home.entity", "vn.credit.home.dao",
+@ComponentScan(basePackages = { "vn.credit.home.controller", "vn.credit.home.entity", "vn.credit.home.dao","vn.credit.home.service"/*, "vn.credit.home.entity", "vn.credit.home.dao",
 		"vn.credit.home.service"*/, "vn.credit.home.config"})
 public class ReportCenterApplication extends SpringBootServletInitializer {
 

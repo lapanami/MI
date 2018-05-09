@@ -28,7 +28,7 @@ public class ApachePOIExcelWrite {
 	 * 
 	 */
 
-	private static final String FILE_NAME = "d:/MyFirstExcel.xlsx";
+	private static final String FILE_NAME = "C:\\Users\\minh.lampn\\Downloads\\MyFirstExcel.xlsx";
 
 	public static void ApachePOIExcelWrite(String url_Save_Date, List<Object> listObject, String nameSheet) {
 		XSSFWorkbook workbook = new XSSFWorkbook();
@@ -38,7 +38,7 @@ public class ApachePOIExcelWrite {
 		int rowNum = 0;
 		for (Object datatype : listData) {
 			Row row = sheet.createRow(rowNum++);
-			int colNum = 0;
+			int colNum = 0;			
 			for (Object field : listData) {
 				Cell cell = row.createCell(colNum++);
 				if (field instanceof String) {

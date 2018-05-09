@@ -36,7 +36,14 @@ public class RootController {
 		model.addAttribute("contextPath", servletContext.getContextPath());
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 		ExtLdapUserDetails extLdapUser = (ExtLdapUserDetails) auth.getPrincipal();
+		String fullName = extLdapUser.getDn();
+		int end = fullName.indexOf(",OU");
+		int position = extLdapUser.getDn().indexOf(",OU", end+1);
+		fullName = fullName.substring(3, end).replace("\\", "");
+		String division = extLdapUser.getDn().substring(end + 4, position);
 		model.addAttribute("user", extLdapUser);
+		model.addAttribute("fullName", fullName);
+		model.addAttribute("division", division);
 		model.addAttribute("title", "HOME PAGE");
 	}
 }

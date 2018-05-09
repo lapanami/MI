@@ -1,0 +1,595 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<title>Feedback Page</title>
+<!-- Tell the browser to be responsive to screen width -->
+<meta
+	content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"
+	name="viewport">
+<!-- Bootstrap 3.3.7 -->
+<link rel="stylesheet"
+	href="${contextPath}/static/bower_components/bootstrap/dist/css/bootstrap.min.css">
+<!-- Font Awesome -->
+<link rel="stylesheet"
+	href="${contextPath}/static/bower_components/font-awesome/css/font-awesome.min.css">
+<!-- Ionicons -->
+<link rel="stylesheet"
+	href="${contextPath}/static/bower_components/Ionicons/css/ionicons.min.css">
+  <!-- bootstrap datepicker -->
+  <link rel="stylesheet" href="../../bower_components/bootstrap-datepicker/dist/css/bootstrap-datepicker.min.css">
+<!-- Theme style -->
+<link rel="stylesheet"
+	href="${contextPath}/static/dist/css/AdminLTE.min.css">
+<!-- AdminLTE Skins. Choose a skin from the css/skins
+       folder instead of downloading all of them to reduce the load. -->
+<link rel="stylesheet"
+	href="${contextPath}/static/dist/css/skins/_all-skins.min.css">
+
+<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+<!--[if lt IE 9]>
+  <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+  <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+  <![endif]-->
+
+<!-- Google Font -->
+<link rel="stylesheet"
+	href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
+</head>
+<body class="hold-transition skin-blue sidebar-mini">
+	<!-- Site wrapper -->
+	<div class="wrapper">
+
+		<header class="main-header">
+			<!-- Logo -->
+			<a href="${contextPath}/" class="logo"> <!-- mini logo for sidebar mini 50x50 pixels -->
+				<span class="logo-mini"><b>MIS</b></span> <!-- logo for regular state and mobile devices -->
+				<span class="logo-lg"><b>MIS </b>TOOL 3.0</span>
+			</a>
+			<!-- Header Navbar: style can be found in header.less -->
+			<nav class="navbar navbar-static-top">
+				<!-- Sidebar toggle button-->
+				<a href="#" class="sidebar-toggle" data-toggle="push-menu"
+					role="button"> <span class="sr-only">Toggle navigation</span> <span
+					class="icon-bar"></span> <span class="icon-bar"></span> <span
+					class="icon-bar"></span>
+				</a>
+
+				<div class="navbar-custom-menu">
+					<ul class="nav navbar-nav">												
+						<!-- User Account: style can be found in dropdown.less -->
+						<li class="dropdown user user-menu"><a href="#"
+							class="dropdown-toggle" data-toggle="dropdown">
+								<img src="${contextPath}/static/images/avatar.png" width="20px"
+								height="20px" alt="User Image" /> <span class="hidden-xs">${user.userDetails.username}</span>
+							</a>
+							<ul class="dropdown-menu">
+								<!-- User image -->
+								<li class="user-header"><img
+									src="${contextPath}/static/images/avatar.png" width="20px"
+									height="20px" class="img-circle" alt="User Image">
+
+									<p>
+										${fullName} <small>${division}</small>
+									</p>
+								</li>								
+								<!-- Menu Footer-->
+								<li class="user-footer">
+									<div class="pull-left">
+										<a href="#" class="btn btn-default btn-flat">Profile</a>
+									</div>
+									<div class="pull-right">
+										<a href="${contextPath}/logout" class="btn btn-default btn-flat">Sign
+											out</a>
+									</div>
+								</li>
+							</ul>
+						</li>
+					</ul>
+				</div>
+			</nav>
+		</header>
+
+		<!-- =============================================== -->
+
+		<!-- Left side column. contains the sidebar -->
+		<aside class="main-sidebar">
+			<!-- sidebar: style can be found in sidebar.less -->
+			<section class="sidebar">
+				<!-- Sidebar user panel -->
+				<!-- search form -->
+				<form action="#" method="get" class="sidebar-form">
+					<div class="input-group">
+						<input type="text" name="q" class="form-control"
+							placeholder="Search..."> <span class="input-group-btn">
+							<button type="submit" name="search" id="search-btn"
+								class="btn btn-flat">
+								<i class="fa fa-search"></i>
+							</button>
+						</span>
+					</div>
+				</form>
+				<!-- /.search form -->
+				<!-- sidebar menu: : style can be found in sidebar.less -->
+				<ul class="sidebar-menu" data-widget="tree">
+					<li class="header">MAIN NAVIGATION</li>
+					<li>
+					<a href="${contextPath}/report">
+						 <i class="fa fa-book"></i> 
+						 <span>Reports</span> 
+					</a>
+					</li>				
+					<li class="treeview">
+						<a href="#"> 
+							<i class="fa fa-question-circle"></i>
+							<span>Customer Service</span> 
+							<span
+								class="pull-right-container"> <i
+									class="fa fa-angle-left pull-right"></i>
+							</span>
+						</a>
+						<ul class="treeview-menu">
+							<li>
+								<a href="${contextPath}/feedback"><i
+									class="fa fa-circle-o"></i> Customer Feedback</a>
+							</li>
+						</ul>
+					</li>					
+				</ul>
+			</section>
+			<!-- /.sidebar -->
+		</aside>
+
+		<!-- =============================================== -->
+
+		<!-- Content Wrapper. Contains page content -->
+		<div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+	    <section class="content-header">
+	      <h1>
+	        Feedback
+	        <small>Please help us improve our service with your feedback</small>
+	      </h1>
+	    </section>
+	    <!-- Main content -->
+	    <section class="content">
+	    	<div class="row" style="height: 120px;"></div>
+	      	<div class="row">
+	      		<div class="col-md-1 col-sm-6 col-xs-12">
+	      		</div>
+	      		      		
+	      		<div class="col-md-2 col-sm-6 col-xs-12" style="text-align: center;">
+	      			<form id="customerForm1">	      			
+	      				<input id="block1" type="image" src="${contextPath}/static/images/angry.png" alt="Submit" width= 80%; height= 80%>	
+	      			</form>    
+	      			<h2 style="color: red; font-weight: bold; ">dfds</h2> 			
+	      		</div>
+	      		<div class="col-md-2 col-sm-6 col-xs-12" style="text-align: center;">
+	      			<form id="customerForm2">
+	      				<input id="block2" type="image" src="${contextPath}/static/images/sad.png" alt="Submit" width= 80%; height= 80%>
+	      			</form>
+	      			<h2 style="color: red; font-weight: bold; ">dfds</h2>
+	      		</div>
+	      		<div class="col-md-2 col-sm-6 col-xs-12" style="text-align: center;">
+	      			<form id="customerForm3">
+	      				<input id="block3" type="image" src="${contextPath}/static/images/meh.png" alt="Submit" width= 80%; height= 80%>
+	      			</form>
+	      			<h2 style="color: red; font-weight: bold; ">dfds</h2>
+	      		</div>
+	      		<div class="col-md-2 col-sm-6 col-xs-12" style="text-align: center;">
+	      			<form id="customerForm4">
+	      				<input id="block4" type="image" src="${contextPath}/static/images/smile.png" alt="Submit" width= 80%; height= 80%>
+	      			</form>
+	      			<h2 style="color: red; font-weight: bold; ">dfds</h2>
+	      		</div>
+	      		<div class="col-md-2 col-sm-6 col-xs-12" style="text-align: center;">	
+	      			<form id="customerForm5">
+	      				<input id="block5" type="image" src="${contextPath}/static/images/smile-big.png" alt="Submit" width= 80%; height= 80%>     
+	      			</form>	
+	      			<h2 style="color: red; font-weight: bold; ">dfds</h2>		
+	      		</div>      		
+	      		
+	      		<div class="col-md-1 col-sm-6 col-xs-12">
+	      		</div>
+			</div>
+			<div class="row" style="margin-top: 100px;">
+				<div class="col-md-4 col-sm-6 col-xs-12">
+				</div>
+				<div class="col-md-4 col-sm-6 col-xs-12" align="center">
+					<button type="button" class="btn btn-block btn-success btn-lg" style="height: 45px; width: 45%;" data-toggle="modal" data-target="#reportmodal">Report</button>
+				</div>
+				<div class="col-md-4 col-sm-6 col-xs-12">
+				</div>				
+			</div>
+			
+			<div class="modal fade" id="reportmodal">
+				<div class="modal-dialog">
+					<div class="modal-content">
+						<div class="modal-header">
+							<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+								<span aria-hidden="true">&times;</span>
+							</button>
+							<h4 class="modal-title">Export Report</h4>
+						</div>
+						<div class="modal-body">
+							<div class="box box-primary">
+									<div class="box-body">
+						              <div class="form-group">
+						                <label>From:</label>
+						
+						                <div class="input-group date">
+						                  <div class="input-group-addon">
+						                    <i class="fa fa-calendar"></i>
+						                  </div>
+						                  <input type="text" class="form-control pull-right" id="fromdatepicker">
+						                </div>
+						              </div>
+						              
+						              <div class="form-group">
+						                <label>To:</label>
+						
+						                <div class="input-group date">
+						                  <div class="input-group-addon">
+						                    <i class="fa fa-calendar"></i>
+						                  </div>
+						                  <input type="text" class="form-control pull-right" id="todatepicker">
+						                </div>
+						              </div>
+									</div>
+									<div class="modal-footer">
+										<button type="button" class="btn btn-default pull-left" data-dismiss="modal">Close</button>										
+										<button id="exportBtn" type="button" class="btn btn-primary">Export</button>
+									</div>
+							</div>									
+						</div>
+				</div>
+			</div>
+		</div>	      
+	    </section>
+	    <!-- /.content -->
+	  </div>
+		<!-- /.content-wrapper -->
+		<footer class="main-footer">
+			<div class="pull-right hidden-xs">
+				<b>Version</b> 3.0.0
+			</div>
+			<!--  <strong>Copyright &copy; 2014-2016 <a href="https://adminlte.io">Almsaeed Studio</a>.</strong> All rights  
+    reserved. -->
+		</footer>
+	</div>
+	<!-- ./wrapper -->
+
+	<!-- jQuery 3 -->
+	<script
+		src="${contextPath}/static/bower_components/jquery/dist/jquery.min.js"></script>
+	<!-- Bootstrap 3.3.7 -->
+	<script
+		src="${contextPath}/static/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+		<!-- Select2 -->
+	<script src="${contextPath}/static/bower_components/select2/dist/js/select2.full.min.js"></script>
+<!-- SlimScroll -->
+	<script
+		src="${contextPath}/static/bower_components/jquery-slimscroll/jquery.slimscroll.min.js"></script>
+	<!-- FastClick -->
+	<script 
+		src="${contextPath}/static/bower_components/fastclick/lib/fastclick.js"></script>
+	<!-- AdminLTE App -->
+	<script 
+		src="${contextPath}/static/dist/js/adminlte.min.js"></script>
+	<!-- AdminLTE for demo purposes -->
+	<script 
+		src="${contextPath}/static/dist/js/demo.js"></script>
+	<script 
+		src="${contextPath}/static/js/jquery.blockUI.js"></script>
+<!-- bootstrap datepicker -->
+	<script src="${contextPath}/static/bower_components/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js"></script>
+	
+<!-- Page script -->
+<script>
+//click Export To Excal Button
+$('#exportBtn').click(function (event) {
+
+	var from = $('#fromdatepicker').val();
+	var to = $('#todatepicker').val();
+	
+	   $.ajax({
+	   type:'POST',
+	   url :"${contextPath}/export?from=" + from + "&to=" + to,
+	   success: function(data) {
+	        console.log('success',data);
+	   },
+	   error:function(exception){
+		   alert('Exeption:'+exception);
+		   console.log('ERROR',exception);
+		}
+	}); 
+	 e.preventDefault();
+	});
+</script>
+<script>
+  $(function () {
+
+    //Date picker
+    $('#fromdatepicker').datepicker({
+      autoclose: true
+    })
+    
+    //Date picker
+    $('#todatepicker').datepicker({
+      autoclose: true
+    })
+  })
+</script>
+	
+<script>
+		$(document).ready(function() {
+			$('.sidebar-menu').tree()
+		})
+</script>
+
+<script>
+//Block UI #block1
+$(document).ready(function() { 
+    $('#block1').click(function() { 
+        $.blockUI({ css: { 
+            border: 'none', 
+            padding: '15px', 
+            backgroundColor: '#000', 
+            '-webkit-border-radius': '10px', 
+            '-moz-border-radius': '10px', 
+            opacity: .5, 
+            color: '#fff' 
+        } }); 
+ 
+        setTimeout($.unblockUI, 1000); 
+    }); 
+});
+
+//Block UI #block2
+$(document).ready(function() { 
+    $('#block2').click(function() { 
+        $.blockUI({ css: { 
+            border: 'none', 
+            padding: '15px', 
+            backgroundColor: '#000', 
+            '-webkit-border-radius': '10px', 
+            '-moz-border-radius': '10px', 
+            opacity: .5, 
+            color: '#fff' 
+        } }); 
+ 
+        setTimeout($.unblockUI, 1000); 
+    }); 
+});
+
+//Block UI #block3
+$(document).ready(function() { 
+    $('#block3').click(function() { 
+        $.blockUI({ css: { 
+            border: 'none', 
+            padding: '15px', 
+            backgroundColor: '#000', 
+            '-webkit-border-radius': '10px', 
+            '-moz-border-radius': '10px', 
+            opacity: .5, 
+            color: '#fff' 
+        } }); 
+ 
+        setTimeout($.unblockUI, 1000); 
+    }); 
+});
+
+//Block UI #block4
+$(document).ready(function() { 
+    $('#block4').click(function() { 
+        $.blockUI({ css: { 
+            border: 'none', 
+            padding: '15px', 
+            backgroundColor: '#000', 
+            '-webkit-border-radius': '10px', 
+            '-moz-border-radius': '10px', 
+            opacity: .5, 
+            color: '#fff' 
+        } }); 
+ 
+        setTimeout($.unblockUI, 1000); 
+    }); 
+});
+
+//Block UI #block5
+$(document).ready(function() { 
+    $('#block5').click(function() { 
+        $.blockUI({ css: { 
+            border: 'none', 
+            padding: '15px', 
+            backgroundColor: '#000', 
+            '-webkit-border-radius': '10px', 
+            '-moz-border-radius': '10px', 
+            opacity: .5, 
+            color: '#fff' 
+        } }); 
+ 
+        setTimeout($.unblockUI, 1000); 
+    }); 
+});
+</script>
+<script>
+//Send data with form 1
+$(document).ready(function() {	
+	// SUBMIT FORM
+    $("#customerForm1").submit(function(event) {
+		// Prevent the form from submitting via the browser.
+		event.preventDefault();
+		addVote();
+	});
+	
+
+	function addVote() {		
+			$.ajax({
+				type : "POST",
+				contentType : "application/json",
+				url : "${contextPath}/vote?name=${user.userDetails.username}&point=-2",
+				dataType : 'json',
+				async: true,
+				timeout : 100000,
+				success : function(data) {
+					console.log("SUCCESS: ", data);
+					var result = $.trim(data);
+					if(result==="success"){
+				    	return true;
+				    }
+					else{
+						return false;
+					}
+				},
+				error : function(e) {
+					console.log("ERROR: ", e);
+				}
+			});
+		}		
+})
+
+//Send data with form 2
+$(document).ready(function() {	
+	// SUBMIT FORM
+    $("#customerForm2").submit(function(event) {
+		// Prevent the form from submitting via the browser.
+		event.preventDefault();
+		addVote();
+	});
+	
+
+	function addVote() {		
+			$.ajax({
+				type : "POST",
+				contentType : "application/json",
+				url : "${contextPath}/vote?name=${user.userDetails.username}&point=-1",
+				dataType : 'json',
+				async: true,
+				timeout : 100000,
+				success : function(data) {
+					console.log("SUCCESS: ", data);
+					var result = $.trim(data);
+					if(result==="success"){
+				    	return true;
+				    }
+					else{
+						return false;
+					}
+				},
+				error : function(e) {
+					console.log("ERROR: ", e);
+				}
+			});
+		}		
+})
+
+//Send data with form 3
+$(document).ready(function() {	
+	// SUBMIT FORM
+    $("#customerForm3").submit(function(event) {
+		// Prevent the form from submitting via the browser.
+		event.preventDefault();
+		addVote();
+	});
+	
+
+	function addVote() {		
+			$.ajax({
+				type : "POST",
+				contentType : "application/json",
+				url : "${contextPath}/vote?name=${user.userDetails.username}&point=0",
+				dataType : 'json',
+				async: true,
+				timeout : 100000,
+				success : function(data) {
+					console.log("SUCCESS: ", data);
+					var result = $.trim(data);
+					if(result==="success"){
+				    	return true;
+				    }
+					else{
+						return false;
+					}
+				},
+				error : function(e) {
+					console.log("ERROR: ", e);
+				}
+			});
+		}		
+})
+
+//Send data with form 4
+$(document).ready(function() {	
+	// SUBMIT FORM
+    $("#customerForm4").submit(function(event) {
+		// Prevent the form from submitting via the browser.
+		event.preventDefault();
+		addVote();
+	});
+	
+
+	function addVote() {		
+			$.ajax({
+				type : "POST",
+				contentType : "application/json",
+				url : "${contextPath}/vote?name=${user.userDetails.username}&point=1",
+				dataType : 'json',
+				async: true,
+				timeout : 100000,
+				success : function(data) {
+					console.log("SUCCESS: ", data);
+					var result = $.trim(data);
+					if(result==="success"){
+				    	return true;
+				    }
+					else{
+						return false;
+					}
+				},
+				error : function(e) {
+					console.log("ERROR: ", e);
+				}
+			});
+		}		
+})
+
+//Send data with form 5
+$(document).ready(function() {	
+	// SUBMIT FORM
+    $("#customerForm5").submit(function(event) {
+		// Prevent the form from submitting via the browser.
+		event.preventDefault();
+		addVote();
+	});
+	
+
+	function addVote() {		
+			$.ajax({
+				type : "POST",
+				contentType : "application/json",
+				url : "${contextPath}/vote?name=${user.userDetails.username}&point=2",
+				dataType : 'json',
+				async: true,
+				timeout : 100000,
+				success : function(data) {
+					console.log("SUCCESS: ", data);
+					var result = $.trim(data);
+					if(result==="success"){
+				    	return true;
+				    }
+					else{
+						return false;
+					}
+				},
+				error : function(e) {
+					console.log("ERROR: ", e);
+				}
+			});
+		}		
+})
+</script>
+</body>
+</html>

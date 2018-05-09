@@ -5,8 +5,6 @@ import javax.servlet.ServletContext;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
-import org.springframework.context.i18n.LocaleContextHolder;
-import org.springframework.context.support.ResourceBundleMessageSource;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
@@ -33,7 +31,7 @@ public class LoginController extends RootController {
 		if (info == null || "anonymousUser".equalsIgnoreCase(info)) {
 			// chua login
 			model.addAttribute("title", "LOGIN");
-			return "login";
+			return "index";
 		} else {
 			return "redirect:/Welcome";
 		}

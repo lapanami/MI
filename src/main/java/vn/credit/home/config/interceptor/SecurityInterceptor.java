@@ -20,8 +20,8 @@ import vn.credit.home.config.ext.ExtLdapUserDetails;
 @Component
 public class SecurityInterceptor implements HandlerInterceptor {
 
-	@Value("${server.session.cookie.name}")
-	String sessionID;
+//	@Value("${server.session.cookie.name}")
+//	String sessionID;
 
 	@Value("${server.contextPath}")
 	String contextPath;
@@ -41,33 +41,34 @@ public class SecurityInterceptor implements HandlerInterceptor {
 			// chua login yet
 			return false;
 		} else {
-			ExtLdapUserDetails userDetails = (ExtLdapUserDetails) auth.getPrincipal();
-			Map<String, Object> mapRolePage = userDetails.getRolePage();
-			List<String> listHome = (mapRolePage.get("Welcome") == null ? new ArrayList<>()
-					: (List<String>) mapRolePage.get("Welcome"));
-			String controllerUri = request.getRequestURI().substring(request.getContextPath().length());
-			if ("/welcome".equalsIgnoreCase(controllerUri) || "/home".equalsIgnoreCase(controllerUri)
-					|| "/index".equalsIgnoreCase(controllerUri)) {
-				return true;
-			} else {
-				String[] arrStr = controllerUri.split("/");
-				if (arrStr.length != 3) {
-					// invalid uri
-					return false;
-				} else {
-					List<String> listPageName = (mapRolePage.get(arrStr[1]) == null ? new ArrayList<>()
-							: (List<String>) mapRolePage.get(arrStr[1]));
-					if (listPageName.contains(arrStr[2])) {
-						return true;
-					} else if (StringUtils.isEmpty(userDetails.getTheMenu().toString())) {
-						response.sendRedirect(contextPath + "/404");
-						return false;
-					} else {
-						response.sendRedirect(contextPath + "/error");
-						return false;
-					}
-				}
-			}
+			return true;
+//			ExtLdapUserDetails userDetails = (ExtLdapUserDetails) auth.getPrincipal();
+//			Map<String, Object> mapRolePage = userDetails.getRolePage();
+//			List<String> listHome = (mapRolePage.get("Welcome") == null ? new ArrayList<>()
+//					: (List<String>) mapRolePage.get("Welcome"));
+//			String controllerUri = request.getRequestURI().substring(request.getContextPath().length());
+//			if ("/welcome".equalsIgnoreCase(controllerUri) || "/home".equalsIgnoreCase(controllerUri)
+//					|| "/index".equalsIgnoreCase(controllerUri) || "/report".equalsIgnoreCase(controllerUri)) {
+//				return true;
+//			} else {
+//				String[] arrStr = controllerUri.split("/");
+//				if (arrStr.length != 3) {
+//					// invalid uri
+//					return false;
+//				} else {
+//					List<String> listPageName = (mapRolePage.get(arrStr[1]) == null ? new ArrayList<>()
+//							: (List<String>) mapRolePage.get(arrStr[1]));
+//					if (listPageName.contains(arrStr[2])) {
+//						return true;
+//					} else if (StringUtils.isEmpty(userDetails.getTheMenu().toString())) {
+//						response.sendRedirect(contextPath + "/404");
+//						return false;
+//					} else {
+//						response.sendRedirect(contextPath + "/error");
+//						return false;
+//					}
+//				}
+//			}
 		}
 	}
 
